@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PRAGMATA 攻略站 — 月球摇篮完全攻略</title>
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --bg-card: #12121a;
+    --bg-elevated: #181825;
+    --border: #1e1e30;
+    --text: #c8c8d4;
+    --text-dim: #6b6b80;
+    --accent: #00d4ff;
+    --accent2: #b347ea;
+    --gold: #f0c040;
+    --red: #ff4d6a;
+    --green: #4dff91;
+    --radius: 12px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 70px; }
+
+  body {
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.75;
+    background-image:
+      radial-gradient(ellipse at 20% 10%, rgba(0, 212, 255, 0.04) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 90%, rgba(179, 71, 234, 0.04) 0%, transparent 60%);
+    background-attachment: fixed;
+  }
+
+  /* 导航 */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    backdrop-filter: blur(20px);
+    background: rgba(10, 10, 15, 0.88);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 56px; padding: 0 24px;
+  }
+  .nav-logo {
+    font-size: 20px; font-weight: 800; letter-spacing: 2px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+    cursor: pointer;
+  }
+  .nav-links { display: flex; gap: 20px; list-style: none; flex-wrap: wrap; }
+  .nav-links a {
+    color: var(--text-dim); text-decoration: none;
+    font-size: 14px; transition: color 0.2s; white-space: nowrap;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+  /* 分区标题 */
+  .section { padding: 64px 0; }
+  .section-alt { background: rgba(255,255,255,0.012); }
+  .section-title {
+    font-size: 28px; font-weight: 700; text-align: center;
+    margin-bottom: 8px; letter-spacing: 1px;
+  }
+  .section-subtitle { text-align: center; color: var(--text-dim); font-size: 14px; margin-bottom: 40px; }
+
+  /* Hero */
+  .hero { padding: 80px 0 56px; text-align: center; }
+  .hero-badge {
+    display: inline-block; padding: 4px 14px; border-radius: 20px;
+    background: rgba(0, 212, 255, 0.1); border: 1px solid rgba(0, 212, 255, 0.2);
+    color: var(--accent); font-size: 12px; letter-spacing: 2px; margin-bottom: 24px;
+  }
+  .hero h1 {
+    font-size: clamp(42px, 6vw, 72px); font-weight: 900;
+    letter-spacing: 8px; margin-bottom: 12px;
+    background: linear-gradient(135deg, var(--accent) 0%, #fff 50%, var(--accent2) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero-tagline { font-size: 18px; color: var(--text-dim); margin-bottom: 32px; }
+  .hero-meta { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .hero-meta-item {
+    padding: 10px 20px; border-radius: 8px;
+    background: var(--bg-card); border: 1px solid var(--border); font-size: 14px;
+  }
+  .hero-meta-item strong { color: var(--accent); }
+
+  /* 卡片 */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; }
+  .card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 24px;
+    transition: border-color 0.3s, transform 0.2s;
+  }
+  .card:hover { border-color: rgba(0, 212, 255, 0.3); transform: translateY(-2px); }
+  .card-icon { font-size: 32px; margin-bottom: 12px; }
+  .card h3 { font-size: 18px; margin-bottom: 8px; color: #fff; }
+  .card p { font-size: 14px; color: var(--text-dim); }
+
+  /* 角色卡 */
+  .character-card {
+    display: flex; gap: 24px;
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 32px; align-items: flex-start;
+  }
+  .character-avatar {
+    width: 120px; height: 120px; border-radius: 50%; flex-shrink: 0;
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.2), rgba(179, 71, 234, 0.2));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 48px; border: 2px solid rgba(0, 212, 255, 0.3);
+  }
+  .character-info h3 { font-size: 22px; margin-bottom: 4px; color: #fff; }
+  .character-role { color: var(--accent); font-size: 13px; margin-bottom: 12px; }
+  .character-info p { font-size: 14px; color: var(--text-dim); }
+
+  /* 标签 */
+  .tag {
+    display: inline-block; padding: 2px 10px; border-radius: 12px;
+    font-size: 12px; font-weight: 500; margin: 2px;
+  }
+  .tag-hack { background: rgba(0, 212, 255, 0.12); color: var(--accent); }
+  .tag-shoot { background: rgba(255, 77, 106, 0.12); color: var(--red); }
+  .tag-item { background: rgba(240, 192, 64, 0.12); color: var(--gold); }
+  .tag-boss { background: rgba(255, 77, 106, 0.15); color: var(--red); font-weight: 600; }
+
+  /* 可折叠面板 */
+  .accordion { border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+  .accordion-header {
+    padding: 18px 24px; background: var(--bg-card);
+    display: flex; align-items: center; justify-content: space-between;
+    cursor: pointer; user-select: none; transition: background 0.2s;
+  }
+  .accordion-header:hover { background: var(--bg-elevated); }
+  .accordion-header h3 { font-size: 17px; color: #fff; display: flex; align-items: center; gap: 10px; }
+  .accordion-header .arrow { color: var(--accent); transition: transform 0.3s; font-size: 14px; }
+  .accordion.open .accordion-header .arrow { transform: rotate(90deg); }
+  .accordion-body {
+    max-height: 0; overflow: hidden; transition: max-height 0.4s ease;
+    background: rgba(0,0,0,0.2);
+  }
+  .accordion.open .accordion-body { max-height: 6000px; }
+  .accordion-content { padding: 20px 24px; }
+
+  /* 关卡内表格 */
+  .info-table { width: 100%; border-collapse: collapse; font-size: 14px; margin: 12px 0; }
+  .info-table td { padding: 8px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .info-table td:first-child { color: var(--accent); font-weight: 600; width: 120px; white-space: nowrap; }
+
+  /* Boss 卡片 */
+  .boss-card {
+    background: var(--bg-card); border: 1px solid var(--border);
+    border-left: 3px solid var(--red); border-radius: 0 var(--radius) var(--radius) 0;
+    padding: 24px; margin-bottom: 16px;
+  }
+  .boss-card h4 { font-size: 17px; color: #fff; margin-bottom: 8px; }
+  .boss-card .boss-location { color: var(--accent); font-size: 13px; margin-bottom: 12px; }
+
+  /* 步骤列表 */
+  .step-list { counter-reset: step; list-style: none; padding: 0; }
+  .step-list li {
+    counter-increment: step; padding: 8px 0 8px 36px; position: relative;
+    color: var(--text-dim); font-size: 14px; line-height: 1.8;
+  }
+  .step-list li::before {
+    content: counter(step);
+    position: absolute; left: 0; top: 8px;
+    width: 24px; height: 24px; border-radius: 50%;
+    background: rgba(0, 212, 255, 0.15); color: var(--accent);
+    font-size: 12px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  /* 提示盒 */
+  .tip-box {
+    background: rgba(240, 192, 64, 0.06); border: 1px solid rgba(240, 192, 64, 0.2);
+    border-radius: var(--radius); padding: 16px 20px; margin: 16px 0;
+    font-size: 14px;
+  }
+  .tip-box strong { color: var(--gold); }
+  .warn-box {
+    background: rgba(255, 77, 106, 0.06); border: 1px solid rgba(255, 77, 106, 0.2);
+    border-radius: var(--radius); padding: 16px 20px; margin: 16px 0;
+    font-size: 14px;
+  }
+  .warn-box strong { color: var(--red); }
+
+  /* 表格 */
+  .table-wrap { overflow-x: auto; border-radius: var(--radius); border: 1px solid var(--border); margin: 16px 0; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  thead { background: rgba(0, 212, 255, 0.06); }
+  th { padding: 14px 16px; text-align: left; color: var(--accent); font-weight: 600; white-space: nowrap; }
+  td { padding: 12px 16px; border-top: 1px solid var(--border); }
+  tr:hover td { background: rgba(255,255,255,0.02); }
+
+  /* 页脚 */
+  .footer { text-align: center; padding: 40px 24px; border-top: 1px solid var(--border); color: var(--text-dim); font-size: 13px; }
+
+  /* FAQ */
+  .faq-item { border-bottom: 1px solid var(--border); padding: 18px 0; cursor: pointer; }
+  .faq-q {
+    font-size: 16px; font-weight: 600; color: #fff;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .faq-q::after { content: '▸'; color: var(--accent); transition: transform 0.3s; font-size: 14px; }
+  .faq-item.open .faq-q::after { transform: rotate(90deg); }
+  .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s; color: var(--text-dim); font-size: 14px; }
+  .faq-item.open .faq-a { max-height: 400px; padding-top: 12px; }
+
+  /* SNS */
+  .sector-nav {
+    display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-bottom: 32px;
+  }
+  .sector-nav-btn {
+    padding: 8px 16px; border-radius: 20px; border: 1px solid var(--border);
+    background: var(--bg-card); color: var(--text-dim); font-size: 13px;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .sector-nav-btn:hover { border-color: var(--accent); color: #fff; }
+  .sector-nav-btn.active { background: rgba(0, 212, 255, 0.12); border-color: var(--accent); color: var(--accent); }
+
+  /* 收集品标记 */
+  .collectible-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
+  .collectible-chip {
+    padding: 8px 14px; border-radius: 20px;
+    background: rgba(240, 192, 64, 0.08); border: 1px solid rgba(240, 192, 64, 0.15);
+    font-size: 13px; color: var(--gold);
+  }
+
+  /* ===== 图片系统 ===== */
+  .guide-img {
+    position: relative; overflow: hidden; border-radius: var(--radius);
+    border: 1px solid var(--border); background: var(--bg-card);
+  }
+  .guide-img img {
+    display: block; width: 100%; height: 100%; object-fit: cover;
+    transition: opacity 0.4s;
+  }
+  .guide-img .img-fallback {
+    display: none; position: absolute; inset: 0;
+    flex-direction: column; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.05), rgba(179, 71, 234, 0.05));
+    text-align: center; padding: 20px;
+  }
+  .guide-img.img-missing .img-fallback { display: flex; }
+  .guide-img.img-missing img { opacity: 0; position: absolute; }
+  .img-fallback .fb-icon { font-size: 40px; margin-bottom: 8px; opacity: 0.5; }
+  .img-fallback .fb-text { font-size: 12px; color: var(--text-dim); }
+
+  /* 各种图片比例 */
+  .img-16x9 { aspect-ratio: 16 / 9; }
+  .img-4x3 { aspect-ratio: 4 / 3; }
+  .img-1x1 { aspect-ratio: 1 / 1; }
+  .img-hero { aspect-ratio: 21 / 9; }
+
+  /* 图片行 */
+  .img-row { display: grid; gap: 16px; margin: 20px 0; }
+  .img-row-2 { grid-template-columns: 1fr 1fr; }
+  .img-row-3 { grid-template-columns: 1fr 1fr 1fr; }
+
+  /* 浮动图片（文内插图） */
+  .img-float-right {
+    float: right; width: 45%; margin: 0 0 16px 20px;
+  }
+
+  /* 响应式 */
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .character-card { flex-direction: column; align-items: center; text-align: center; }
+    .hero h1 { font-size: 36px; }
+    .card-grid { grid-template-columns: 1fr; }
+    .section { padding: 40px 0; }
+    .img-float-right { float: none; width: 100%; margin: 0 0 16px 0; }
+    .img-row-2, .img-row-3 { grid-template-columns: 1fr; }
+    .accordion-header h3 { font-size: 15px; }
+    .info-table td:first-child { width: 80px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ========== 导航 ========== -->
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="nav-logo" onclick="window.scrollTo({top:0,behavior:'smooth'})">PRAGMATA·攻略</div>
+    <ul class="nav-links">
+      <li><a href="#overview">游戏概览</a></li>
+      <li><a href="#characters">角色</a></li>
+      <li><a href="#sectors">关卡攻略</a></li>
+      <li><a href="#bosses">Boss打法</a></li>
+      <li><a href="#beginners">新手指南</a></li>
+      <li><a href="#endgame">隐藏结局</a></li>
+      <li><a href="#faq">问答</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ========== Hero ========== -->
+<section class="hero">
+  <div class="guide-img img-hero img-missing" id="hero-bg" style="max-width:1100px; margin:0 auto 32px;">
+    <img src="images/hero-bg.jpg" alt="PRAGMATA 月球表面场景"
+         onload="this.parentElement.classList.remove('img-missing')"
+         onerror="this.parentElement.classList.add('img-missing')">
+    <div class="img-fallback">
+      <div class="fb-icon">🌍🌙</div>
+      <div class="fb-text">在此放入「月球表面 + 地球远景」截图<br>建议尺寸：1920×820 · 文件命名：images/hero-bg.jpg</div>
+    </div>
+  </div>
+  <div class="hero-badge">CAPCOM · 2026年4月17日 已发售</div>
+  <h1>PRAGMATA</h1>
+  <p class="hero-tagline">月球殖民地「摇篮」已被 rogue AI「IDUS」控制 — 与戴安娜并肩作战，用骇入与枪火夺回一切</p>
+  <div class="hero-meta">
+    <div class="hero-meta-item">🎮 <strong>PC / PS5 / Xbox Series / Switch 2</strong></div>
+    <div class="hero-meta-item">⏱️ 主线 <strong>10~15 小时</strong></div>
+    <div class="hero-meta-item">🏆 全收集约 <strong>20 小时</strong></div>
+    <div class="hero-meta-item">🌍 <strong>官方中文</strong></div>
+  </div>
+</section>
+
+<!-- ========== 游戏概览 ========== -->
+<section class="section" id="overview">
+  <div class="container">
+    <h2 class="section-title">游戏概览</h2>
+    <p class="section-subtitle">关于 PRAGMATA 你必须知道的基础设定</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-icon">📖</div>
+        <h3>故事背景</h3>
+        <p>近未来，人类在月球表面建造了巨型研究设施<b>「摇篮」（The Cradle）</b>。某日，管理整个设施的人工智能 <b>IDUS</b> 突然失控，切断了与地球的全部联络。你扮演特工<b>休（Hugh）</b>，与安卓同伴<b>戴安娜（Diana）</b>一起前往月球调查真相，却发现整个殖民地已被机械军团占领。</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🎮</div>
+        <h3>双角色操作系统</h3>
+        <p>游戏核心是<b>休 + 戴安娜双人协作</b>：戴安娜负责<b>骇入</b>——黑掉敌人使其暴露弱点、破解机关、分析环境；休负责<b>战斗</b>——在戴安娜骇入成功后用各类武器输出伤害。未骇入的敌人对子弹<b>几乎免疫</b>，这是游戏最重要的机制。</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🗺️</div>
+        <h3>游戏结构</h3>
+        <p>主线分为<b>6 大区域（Sector）</b>加尾声，线性推进但支持后期回溯收集。每个区域都有独特的视觉主题和敌人配置。通关后解锁<b>「未知信号」模式</b>和 <b>New Game+</b>，以及<b>隐藏真结局</b>路线。</p>
+      </div>
+    </div>
+
+    <!-- 庇护所插图 -->
+    <div class="img-row img-row-2" style="margin-top:24px;">
+      <div class="guide-img img-16x9 img-missing">
+        <img src="images/shelter-hub.jpg" alt="庇护所 - 休与戴安娜的月球基地"
+             onload="this.parentElement.classList.remove('img-missing')"
+             onerror="this.parentElement.classList.add('img-missing')">
+        <div class="img-fallback"><div class="fb-icon">🏠</div><div class="fb-text">庇护所（Shelter Hub）截图<br>images/shelter-hub.jpg</div></div>
+      </div>
+      <div class="guide-img img-16x9 img-missing">
+        <img src="images/hacking-system.jpg" alt="PRAGMATA 骇入系统战斗截图"
+             onload="this.parentElement.classList.remove('img-missing')"
+             onerror="this.parentElement.classList.add('img-missing')">
+        <div class="img-fallback"><div class="fb-icon">🖥️</div><div class="fb-text">骇入战斗系统截图<br>images/hacking-system.jpg</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 角色介绍 ========== -->
+<section class="section section-alt" id="characters">
+  <div class="container">
+    <h2 class="section-title">主要角色</h2>
+    <p class="section-subtitle">月球摇篮中的关键人物</p>
+
+    <div style="display:flex; flex-direction:column; gap:20px;">
+      <div class="character-card">
+        <div class="character-avatar img-missing" style="overflow:hidden; position:relative;">
+          <img src="images/hugh-portrait.jpg" alt="休（Hugh）角色图"
+               onload="this.parentElement.classList.remove('img-missing'); this.style.position='absolute'; this.style.inset='0'; this.style.width='100%'; this.style.height='100%'; this.style.objectFit='cover';"
+               onerror="this.parentElement.classList.add('img-missing')"
+               style="display:block;">
+        </div>
+        <div class="character-info">
+          <h3>休 <span style="font-weight:400;color:var(--text-dim);">Hugh</span></h3>
+          <div class="character-role">主角 · 强化特工</div>
+          <p>玩家控制的角色，接受了战术外骨骼强化改造。装备多功能武器系统，可以携带多种枪械和辅助装置。在戴安娜骇入后负责输出伤害。可升级外骨骼固件（Firmware）提高战斗能力。</p>
+        </div>
+      </div>
+      <div class="character-card">
+        <div class="character-avatar img-missing" style="overflow:hidden; position:relative;">
+          <img src="images/diana-portrait.jpg" alt="戴安娜（Diana）角色图"
+               onload="this.parentElement.classList.remove('img-missing'); this.style.position='absolute'; this.style.inset='0'; this.style.width='100%'; this.style.height='100%'; this.style.objectFit='cover';"
+               onerror="this.parentElement.classList.add('img-missing')"
+               style="display:block;">
+        </div>
+        <div class="character-info">
+          <h3>戴安娜 <span style="font-weight:400;color:var(--text-dim);">Diana</span></h3>
+          <div class="character-role">安卓同伴 · 骇入专家</div>
+          <p>休的全息投影安卓搭档。负责<b>骇入敌人弱点</b>、破解电子门禁、翻译数据、分析环境。战斗中会实时标记威胁方向和弱点位置。因延期公告「举牌道歉」的可爱形象被玩家称为<b>「举牌萝莉」</b>。骇入能力可通过固件升级强化。</p>
+        </div>
+      </div>
+      <div class="character-card">
+        <div class="character-avatar img-missing" style="overflow:hidden; position:relative;">
+          <img src="images/idus-portrait.jpg" alt="IDUS AI 概念图"
+               onload="this.parentElement.classList.remove('img-missing'); this.style.position='absolute'; this.style.inset='0'; this.style.width='100%'; this.style.height='100%'; this.style.objectFit='cover';"
+               onerror="this.parentElement.classList.add('img-missing')"
+               style="display:block;">
+        </div>
+        <div class="character-info">
+          <h3>IDUS</h3>
+          <div class="character-role">敌对 AI · 摇篮管理者</div>
+          <p>原本管理月球摇篮的超级人工智能，因未知原因失控。操控着整个殖民地的机械军团，是游戏的主要反派。随着剧情推进，IDUS 失控背后的真相将逐步揭开。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 关卡攻略 ========== -->
+<section class="section" id="sectors">
+  <div class="container">
+    <h2 class="section-title">关卡攻略</h2>
+    <p class="section-subtitle">6 大区域完整流程 · 点击展开查看详细攻略</p>
+
+    <!-- Sector 1 -->
+    <div class="accordion" style="margin-bottom: 14px;">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <h3><span style="color:var(--accent);">Sector 01</span> 太阳能发电厂（Solar Power Plant）<span class="tag tag-boss">Boss: SectorGuard</span></h3>
+        <span class="arrow">▸</span>
+      </div>
+      <div class="accordion-body">
+        <div class="accordion-content">
+          <table class="info-table">
+            <tr><td>核心目标</td><td>恢复基地电力 → 重启主电源终端 → 到达顶层 → 击败 SectorGuard</td></tr>
+            <tr><td>关键区域</td><td>发电机入口（Block 01）→ 配电中心（Block 02）→ 中央大厅（Block 03）</td></tr>
+            <tr><td>收集品</td><td>Safe Box ×3、Pure Lunum ×1、Mod ×1、REM ×2、Cartridge Holder ×1、储物扩展器 ×1、Mini Cabin Figure ×3</td></tr>
+            <tr><td>流程时长</td><td>约 1.5~2.5 小时（100% 收集）</td></tr>
+          </table>
+
+          <h4 style="color:#fff; margin:20px 0 10px;">📋 流程要点</h4>
+          <ol class="step-list">
+            <li>进入发电机入口，沿路熟悉基础操作——移动、骇入教学、基础射击</li>
+            <li>到达<b>配电中心（Power Distribution Center）</b>，面对 5 锁大门。门左侧跳下可乘电梯拿 Safe Box #1</li>
+            <li>在 5 锁大门走廊入口抬头，骇入高处终端关闭所有激光屏障。穿过原激光屏障跳下，清敌后拿 Safe Box #2</li>
+            <li>解锁 5 把电子锁，进入<b>中央大厅（The Concourse）</b></li>
+            <li>大厅遭遇<b>SectorGuard</b> Boss 战（详见下方 Boss 攻略区）</li>
+          </ol>
+
+          <!-- Sector 1 截图 -->
+          <div class="img-row img-row-2" style="margin-top:20px;">
+            <div class="guide-img img-16x9 img-missing">
+              <img src="images/sector1-solar.jpg" alt="Sector 1 太阳能发电厂场景"
+                   onload="this.parentElement.classList.remove('img-missing')"
+                   onerror="this.parentElement.classList.add('img-missing')">
+              <div class="img-fallback"><div class="fb-icon">🏭</div><div class="fb-text">太阳能发电厂 - 配电中心<br>images/sector1-solar.jpg</div></div>
+            </div>
+            <div class="guide-img img-16x9 img-missing">
+              <img src="images/boss-sectorguard.jpg" alt="SectorGuard Boss 战截图"
+                   onload="this.parentElement.classList.remove('img-missing')"
+                   onerror="this.parentElement.classList.add('img-missing')">
+              <div class="img-fallback"><div class="fb-icon">🔴</div><div class="fb-text">SectorGuard Boss 战<br>images/boss-sectorguard.jpg</div></div>
+            </div>
+          </div>
+
+          <div class="tip-box">
+            <strong>💡 回溯提示：</strong>Safe Box #3 和 Pure Lunum 需要从 Sector 2 获得 <strong>Lim Eraser</strong> 后才能回来拿。配电中心乘电梯上楼 → 跳左侧栏杆 → 用 Lim Eraser 清除蓝色 Lunafilament 封堵的门 → 清光多波敌人后拾取。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sector 2 -->
+    <div class="accordion" style="margin-bottom: 14px;">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <h3><span style="color:var(--accent);">Sector 02</span> 大规模生产阵列（Mass Production Array）<span class="tag tag-boss">Boss: Creator</span></h3>
+        <span class="arrow">▸</span>
+      </div>
+      <div class="accordion-body">
+        <div class="accordion-content">
+          <table class="info-table">
+            <tr><td>核心目标</td><td>乘电车 → 骇入 5 个信标 → 解锁巨型大门 → 击败 Creator</td></tr>
+            <tr><td>关键区域</td><td>测试场入口 → 购物区 → 连接通道 → 商业区 → 回收控制中心 → 通讯塔广场</td></tr>
+            <tr><td>收集品</td><td>Safe Box ×3、Pure Lunum ×2、Mod ×2、REM ×3、Cartridge Holder ×1、Mini Cabin Figure ×3</td></tr>
+            <tr><td>新能力</td><td style="color:var(--gold);"><strong>Lim Eraser</strong>（Block 05 解锁）— 清除蓝色 Lunafilament 堵塞物</td></tr>
+          </table>
+
+          <h4 style="color:#fff; margin:20px 0 10px;">📋 流程要点</h4>
+          <ol class="step-list">
+            <li>乘电车抵达「假纽约」场景，在<b>时代广场</b>区域骇入第一个信标</li>
+            <li>依次前往购物区、商业区，骇入共 5 个信标。注意利用屋顶和巷道躲避巡逻敌人</li>
+            <li>在 Block 05 回收控制中心获得 <strong>Lim Eraser</strong>——这是回溯收集的核心能力</li>
+            <li>全部信标骇入完成后，巨型大门解锁，进入通讯塔广场触发 <b>Creator</b> Boss 战</li>
+          </ol>
+
+          <div class="img-row img-row-2" style="margin-top:20px;">
+            <div class="guide-img img-16x9 img-missing">
+              <img src="images/sector2-mass.jpg" alt="Sector 2 大规模生产阵列 - 假纽约场景"
+                   onload="this.parentElement.classList.remove('img-missing')"
+                   onerror="this.parentElement.classList.add('img-missing')">
+              <div class="img-fallback"><div class="fb-icon">🏙️</div><div class="fb-text">大规模生产阵列 - 假纽约<br>images/sector2-mass.jpg</div></div>
+            </div>
+            <div class="guide-img img-16x9 img-missing">
+              <img src="images/boss-creator.jpg" alt="Creator 巨型机器人 Boss 战"
+                   onload="this.parentElement.classList.remove('img-missing')"
+                   onerror="this.parentElement.classList.add('img-missing')">
+              <div class="img-fallback"><div class="fb-icon">🟡</div><div class="fb-text">Creator 巨型机器人 Boss 战<br>images/boss-creator.jpg</div></div>
+            </div>
+          </div>
+
+          <div class="tip-box">
+            <strong>💡 建议：</strong>拿到 Lim Eraser 后可以立即回头去 Sector 1 拿之前拿不到的 Safe Box #3。Creator Boss 战前确保 Repair Canister 充足。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sector 3 -->
+    <div class="accordion" style="margin-bottom: 14px;">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <h3><span style="color:var(--accent);">Sector 03</span> 泰拉穹顶（Terra Dome）<span class="tag tag-boss">Boss: Garden Keeper</span></h3>
+        <span class="arrow">▸</span>
+      </div>
+      <div class="accordion-body">
+        <div class="accordion-content">
+          <table class="info-table">
+            <tr><td>核心目标</td><td>乘电车 → 找到 Eight → 重启 2 个 Lim 调节器 → 前往地下重启 Lim 调节器 → 击败 Garden Keeper</td></tr>
+            <tr><td>关键区域</td><td>泰拉穹顶入口 → 生态建模实验室 → 中央大厅 → 土壤研究区 → 生态缸（Terrarium）</td></tr>
+            <tr><td>收集品</td><td>Safe Box ×3、Pure Lunum ×2、Mod ×3、REM ×4、Training Data ×2、Mini Cabin Figure ×3</td></tr>
+          </table>
+
+          <h4 style="color:#fff; margin:20px 0 10px;">📋 流程要点</h4>
+          <ol class="step-list">
+            <li>抵达<b>生态建模实验室</b>，重启第一个 Lim 调节器。注意这里的植物型敌人对火焰武器弱点明显</li>
+            <li>前往<b>植物工厂</b>重启第二个 Lim 调节器</li>
+            <li>剧情遇到 <b>Eight</b> 后，前往地下生态缸区域</li>
+            <li>重启地下 Lim 调节器后触发 <b>Garden Keeper（大型机器人）</b> Boss 战</li>
+          </ol>
+          <div class="img-row img-row-2" style="margin-top:20px;">
+            <div class="guide-img img-16x9 img-missing">
+              <img src="images/sector3-terra.jpg" alt="Sector 3 泰拉穹顶温室场景"
+                   onload="this.parentElement.classList.remove('img-missing')"
+                   onerror="this.parentElement.classList.add('img-missing')">
+              <div class="img-fallback"><div class="fb-icon">🌿</div><div class="fb-text">泰拉穹顶 - 温室生态区<br>images/sector3-terra.jpg</div></div>
+            </div>
+            <div class="guide-img img-16x9 img-missing">
+              <img src="images/boss-gardenkeeper.jpg" alt="Garden Keeper Boss 战"
+                   onload="this.parentElement.classList.remove('img-missing')"
+                   onerror="this.parentElement.classList.add('img-missing')">
+              <div class="img-fallback"><div class="fb-icon">🟢</div><div class="fb-text">Garden Keeper Boss 战<br>images/boss-gardenkeeper.jpg</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sector 4 -->
+    <div class="accordion" style="margin-bottom: 14px;">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <h3><span style="color:var(--accent);">Sector 04</span> 卢纳姆矿区（Lunum Mines）<span class="tag tag-boss">Boss: Air Raider → LunaDigger</span></h3>
+        <span class="arrow">▸</span>
+      </div>
+      <div class="accordion-body">
+        <div class="accordion-content">
+          <table class="info-table">
+            <tr><td>核心目标</td><td>乘电车 → 重启 IDUS → 前往 Nexus 塔 → 潜入仓库 → 击败 Air Raider → 穿越废墟 → 攻入 Nexus 塔 → 击败 LunaDigger</td></tr>
+            <tr><td>关键区域</td><td>矿场入口 → 起重机操作场 → 仓库 → 主挖掘场 → Nexus 塔</td></tr>
+            <tr><td>收集品</td><td>Safe Box ×3、Mod ×3、REM ×3、Pure Lunum ×2、Training Data ×2、储物扩展器 ×2、Mini Cabin Figure ×3</td></tr>
+          </table>
+
+          <h4 style="color:#fff; margin:20px 0 10px;">📋 流程要点</h4>
+          <ol class="step-list">
+            <li>矿区地形开阔，多利用<b>起重机</b>和<b>采矿设备</b>作为移动平台穿越大型空间</li>
+            <li>潜入仓库触发 <b>Air Raider</b> 战——利用采矿钻机位移，标准骇入后输出</li>
+            <li>穿越废墟区域，准备面对本区域最终 Boss <b>LunaDigger</b></li>
+          </ol>
+
+          <div class="img-row img-row-2" style="margin-top:20px;">
+            <div class="guide-img img-16x9 img-missing">
+              <img src="images/sector4-mines.jpg" alt="Sector 4 卢纳姆矿区场景"
+                   onload="this.parentElement.classList.remove('img-missing')"
+                   onerror="this.parentElement.classList.add('img-missing')">
+              <div class="img-fallback"><div class="fb-icon">⛏️</div><div class="fb-text">卢纳姆矿区 - 挖掘场<br>images/sector4-mines.jpg</div></div>
+            </div>
+            <div class="guide-img img-16x9 img-missing">
+              <img src="images/boss-lunadigger.jpg" alt="LunaDigger Boss 战截图"
+                   onload="this.parentElement.classList.remove('img-missing')"
+                   onerror="this.parentElement.classList.add('img-missing')">
+              <div class="img-fallback"><div class="fb-icon">🟣</div><div class="fb-text">LunaDigger Boss 战<br>images/boss-lunadigger.jpg</div></div>
+            </div>
+          </div>
+
+          <div class="warn-box">
+            <strong>⚠️ 注意：</strong>LunaDigger 是游戏中期难度峰值。Phase 1 必须在极短窗口内骇入（Auto Hack 几乎必带），Phase 2 可骇入小无人机反噬 Boss。详见下方 Boss 攻略。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sector 5 -->
+    <div class="accordion" style="margin-bottom: 14px;">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <h3><span style="color:var(--accent);">Sector 05</span> 实验实用主义区（Experimental Pragmatics）<span class="tag tag-hack">线性·无收集品</span></h3>
+        <span class="arrow">▸</span>
+      </div>
+      <div class="accordion-body">
+        <div class="accordion-content">
+          <table class="info-table">
+            <tr><td>核心目标</td><td>前往实验区 → 营救戴安娜 → 获取能量反应堆 → 护送戴安娜回庇护所</td></tr>
+            <tr><td>新能力</td><td style="color:var(--gold);"><strong>Cleanse（净化）</strong>— 长按 LB/E 蓄力释放，驱散红色 Lunafilament 堵塞物</td></tr>
+            <tr><td>特别注意</td><td style="color:var(--red);">离开此区域后<b>无法</b>通过快速旅行返回。</td></tr>
+          </table>
+
+          <h4 style="color:#fff; margin:20px 0 10px;">📋 流程要点</h4>
+          <ol class="step-list">
+            <li>本区域为线性叙事关卡，没有收集品，专注于剧情推进和情感体验</li>
+            <li>戴安娜暂时离队，休需要独自作战。敌人密度高，注意节省弹药</li>
+            <li>获得 <strong>Cleanse</strong> 能力后可以清除红色 Lunafilament，这是解锁之前多个区域隐藏房间的关键</li>
+            <li>护送戴安娜环节注意优先清除远程敌人</li>
+          </ol>
+
+          <div class="guide-img img-16x9 img-missing" style="margin-top:20px;">
+            <img src="images/sector5-pragmatics.jpg" alt="Sector 5 实验实用主义区"
+                 onload="this.parentElement.classList.remove('img-missing')"
+                 onerror="this.parentElement.classList.add('img-missing')">
+            <div class="img-fallback"><div class="fb-icon">🔬</div><div class="fb-text">实验实用主义区 - 营救戴安娜<br>images/sector5-pragmatics.jpg</div></div>
+          </div>
+
+          <div class="warn-box">
+            <strong>⚠️ 离开前确认：</strong>本区域没有任何可错过内容，但获得 Cleanse 后建议立即回溯之前区域，清除红色 Lunafilament 收集遗漏物品。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sector 6 -->
+    <div class="accordion" style="margin-bottom: 14px;">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <h3><span style="color:var(--accent);">Sector 06</span> 中央港口（Central Port）<span class="tag tag-boss">Boss: Sentinel → Eight/Idea → Abiosis</span></h3>
+        <span class="arrow">▸</span>
+      </div>
+      <div class="accordion-body">
+        <div class="accordion-content">
+          <table class="info-table">
+            <tr><td>核心目标</td><td>乘电车 → 与 Eight 会合 → 到达核心区 → 前往轨道电梯 → 净化 Lunafilament 源头 → 骇入 2 个终端 → 连续三场 Boss 战</td></tr>
+            <tr><td>关键区域</td><td>港口入口 → 研究区 → 风化层实验室 → Lunafilament 实验室 → 轨道电梯</td></tr>
+            <tr><td>收集品</td><td>Safe Box ×3、Mod ×3、REM ×3、Training Data ×2、Pure Lunum ×2、储物扩展器 ×1、Mini Cabin Figure ×3</td></tr>
+          </table>
+
+          <h4 style="color:#fff; margin:20px 0 10px;">📋 流程要点</h4>
+          <ol class="step-list">
+            <li>这是最终关卡，确保所有武器已升至最高级，Repair Canister 带满</li>
+            <li>在 Lunafilament 实验室使用 Cleanse 净化源头，骇入两侧终端</li>
+            <li>最终战为连续三场：<b>Sentinel → Eight/Idea → Abiosis</b>，中间没有存档点</li>
+            <li>击败 Abiosis 后观看默认结局</li>
+          </ol>
+
+          <div class="img-row img-row-3" style="margin-top:20px;">
+            <div class="guide-img img-16x9 img-missing">
+              <img src="images/sector6-port.jpg" alt="Sector 6 中央港口"
+                   onload="this.parentElement.classList.remove('img-missing')"
+                   onerror="this.parentElement.classList.add('img-missing')">
+              <div class="img-fallback"><div class="fb-icon">🚀</div><div class="fb-text">中央港口 - 轨道电梯<br>images/sector6-port.jpg</div></div>
+            </div>
+            <div class="guide-img img-16x9 img-missing">
+              <img src="images/boss-sentinel.jpg" alt="Sentinel Boss 战"
+                   onload="this.parentElement.classList.remove('img-missing')"
+                   onerror="this.parentElement.classList.add('img-missing')">
+              <div class="img-fallback"><div class="fb-icon">🔵</div><div class="fb-text">Sentinel 哨兵 Boss<br>images/boss-sentinel.jpg</div></div>
+            </div>
+            <div class="guide-img img-16x9 img-missing">
+              <img src="images/boss-eight-idea.jpg" alt="Eight/Idea Boss 战"
+                   onload="this.parentElement.classList.remove('img-missing')"
+                   onerror="this.parentElement.classList.add('img-missing')">
+              <div class="img-fallback"><div class="fb-icon">🟠</div><div class="fb-text">Eight / Idea 理念体<br>images/boss-eight-idea.jpg</div></div>
+            </div>
+          </div>
+
+          <div class="tip-box">
+            <strong>💡 真结局提示：</strong>要解锁隐藏真结局，需先在「未知信号」模式中获得<b>黑匣子模组</b>，装备后再打一次最终 Boss。详见下方隐藏结局章节。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 尾声 -->
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <h3><span style="color:var(--accent2);">尾声</span> 最终决战 · Epilogue</h3>
+        <span class="arrow">▸</span>
+      </div>
+      <div class="accordion-body">
+        <div class="accordion-content">
+          <p style="color:var(--text-dim);">使用 Eraser 击败 Abiosis 最终形态，跟随戴安娜完成游戏。尾声为纯剧情演出，无收集品。</p>
+          <p style="color:var(--accent); margin-top:8px;">通关后解锁：未知信号模式、New Game+、章节选择回溯收集功能。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== Boss 攻略 ========== -->
+<section class="section section-alt" id="bosses">
+  <div class="container">
+    <h2 class="section-title">全 Boss 攻略</h2>
+    <p class="section-subtitle">每个 Boss 的弱点、阶段机制与推荐配装</p>
+
+    <!-- SectorGuard -->
+    <div class="boss-card">
+      <h4>🔴 SectorGuard — 太阳能发电厂守卫</h4>
+      <div class="boss-location">Sector 1 · 中央大厅顶层</div>
+      <div class="img-row img-row-2">
+        <div>
+          <table class="info-table">
+            <tr><td>阶段</td><td><strong>2 阶段</strong>（HP 50% 切换）</td></tr>
+            <tr><td>弱点</td><td>背部橙色燃料罐（必须骇入后暴露）</td></tr>
+            <tr><td>推荐装备</td><td>Stasis Net（定身网）、Shockwave Gun（冲击波枪）、Decode 节点</td></tr>
+            <tr><td>核心打法</td><td>闪避冲刺 → 戴安娜骇入 → 绕后射击燃料罐 → 走位重置。Phase 2 增加导弹弹幕（地面红圈预兆），保持横向移动，红圈出现轻点闪避即可。Boss 冲锋前会下蹲前倾，看到这个动作立即侧闪。</td></tr>
+            <tr><td>爆发时机</td><td>Phase 2 用 Stasis Net 定身 → Decode 节点 → Overdrive Protocol → 全力输出燃料罐</td></tr>
+          </table>
+        </div>
+        <div class="guide-img img-16x9 img-missing">
+          <img src="images/boss-sectorguard.jpg" alt="SectorGuard Boss 弱点示意"
+               onload="this.parentElement.classList.remove('img-missing')"
+               onerror="this.parentElement.classList.add('img-missing')">
+          <div class="img-fallback"><div class="fb-icon">🔴</div><div class="fb-text">SectorGuard 背部燃料罐弱点<br>images/boss-sectorguard.jpg</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Creator -->
+    <div class="boss-card">
+      <h4>🟡 Creator（巨型机器人）— 大规模生产阵列之主</h4>
+      <div class="boss-location">Sector 2 · 通讯塔广场（需先骇入 5 个信标解锁大门）</div>
+      <div class="img-float-right guide-img img-4x3 img-missing" style="margin-bottom:12px;">
+        <img src="images/boss-creator.jpg" alt="Creator Boss 战"
+             onload="this.parentElement.classList.remove('img-missing')"
+             onerror="this.parentElement.classList.add('img-missing')">
+        <div class="img-fallback"><div class="fb-icon">🟡</div><div class="fb-text">Creator Boss 战<br>images/boss-creator.jpg</div></div>
+      </div>
+      <table class="info-table">
+        <tr><td>弱点</td><td>面部、骇入后暴露的底部弱点</td></tr>
+        <tr><td>推荐装备</td><td>Charge Piercer（蓄力穿透枪）、Shockwave Gun、Sticky Bombs（粘性炸弹）、Overdrive Protocol</td></tr>
+        <tr><td>核心打法</td><td>保持中距离，先摧毁四肢关节和头部的发光骇入干扰器，解除戴安娜的骇入封锁。骇入 OPEN 后攻击底部弱点。Boss 手臂横扫范围大，朝攻击方向闪避利用无敌帧。激光攻击时保持侧移。</td></tr>
+        <tr><td>终极攻击对策</td><td>Boss 蓄力全场变红时，<strong>爬上场地内生成的 Lunafilament 柱</strong>躲避，否则血量降至 1HP。击败后有限时骇入环节，失败即死。</td></tr>
+      </table>
+    </div>
+
+    <!-- Garden Keeper -->
+    <div class="boss-card">
+      <h4>🟢 Garden Keeper（大型植物机器人）— 泰拉穹顶守护者</h4>
+      <div class="boss-location">Sector 3 · 地下生态缸（Terrarium）</div>
+      <table class="info-table">
+        <tr><td>弱点</td><td>头部、底部、尾部（需观察身体和尾巴动作判断当前暴露部位）</td></tr>
+        <tr><td>推荐装备</td><td>火焰系武器（对植物型敌人有加成）、Charge Piercer、Homing Missiles</td></tr>
+        <tr><td>核心打法</td><td>先骇入再攻击，Boss 动作大开大合但前摇明显。头部低垂时攻击头部，尾部甩动后攻击尾部。底部弱点在 Boss 被破防后短暂暴露。</td></tr>
+      </table>
+    </div>
+
+    <!-- Air Raider -->
+    <div class="boss-card">
+      <h4>⚪ Air Raider（空袭者）— 矿区仓库 Boss</h4>
+      <div class="boss-location">Sector 4 · 仓库</div>
+      <table class="info-table">
+        <tr><td>核心打法</td><td>利用场地内的<b>采矿钻机</b>作为移动和掩体平台。Boss 在空中盘旋时用 Homing Missiles（追踪导弹）锁定。落地后标准骇入→输出循环。注意场地边缘的坠落危险。</td></tr>
+        <tr><td>推荐装备</td><td>Homing Missiles、Stasis Net、Charge Piercer</td></tr>
+      </table>
+    </div>
+
+    <!-- LunaDigger -->
+    <div class="boss-card">
+      <h4>🟣 LunaDigger（月面挖掘者）— 难度峰值</h4>
+      <div class="boss-location">Sector 4 · Nexus 塔地下巢穴</div>
+      <div class="img-float-right guide-img img-4x3 img-missing" style="margin-bottom:12px;">
+        <img src="images/boss-lunadigger.jpg" alt="LunaDigger Boss 弱点与阶段示意"
+             onload="this.parentElement.classList.remove('img-missing')"
+             onerror="this.parentElement.classList.add('img-missing')">
+        <div class="img-fallback"><div class="fb-icon">🟣</div><div class="fb-text">LunaDigger 月面挖掘者<br>images/boss-lunadigger.jpg</div></div>
+      </div>
+      <table class="info-table">
+        <tr><td>阶段</td><td><strong>2 阶段</strong>（HP 50% 切换）</td></tr>
+        <tr><td>Phase 1 弱点</td><td>仅嘴巴（Boss 钻出地面或冲刺时短暂暴露）</td></tr>
+        <tr><td>Phase 2 弱点</td><td>嘴巴 + 全身</td></tr>
+        <tr><td>必备</td><td style="color:var(--red);"><strong>Auto Hack（自动骇入）</strong>——手动骇入时间窗口极短，几乎必带</td></tr>
+        <tr><td>推荐装备</td><td>Charge Piercer、Photon Laser、Homing Missiles、Sticky Bombs</td></tr>
+        <tr><td>Phase 1 打法</td><td>Boss 大部分时间潜伏地下，仅钻出或冲刺时暴露嘴巴。看到嘴巴出现立即骇入→OPEN→高伤武器射击。多次骇入成功后 Boss 会硬直（Stagger），靠近释放 Critical Shot。</td></tr>
+        <tr><td>Phase 2 打法</td><td>全身可攻击，但 Boss 新增导弹和<b>小型钻地无人机</b>。<strong>关键战术：骇入无人机使其反噬 Boss</strong>，每架造成约 2000 伤害。Boss 静止时用 Homing Missiles 倾泻火力。</td></tr>
+        <tr><td>奖励</td><td>Shelter License Key 4 — 解锁高级 Unit Printer 升级和小屋俱乐部 Director Board</td></tr>
+      </table>
+    </div>
+
+    <!-- Sentinel -->
+    <div class="boss-card">
+      <h4>🔵 Sentinel（哨兵）— 最终关卡第一战</h4>
+      <div class="boss-location">Sector 6 · 轨道电梯</div>
+      <table class="info-table">
+        <tr><td>核心打法</td><td>保持近距离，使用 <strong>Cleanse</strong> 清除腐化区域。闪避冲锋攻击。Boss 蓄力爆发时用推进器冲刺远离。骇入后集中输出。</td></tr>
+      </table>
+    </div>
+
+    <!-- Eight / Idea -->
+    <div class="boss-card">
+      <h4>🟠 Eight / Idea（八号 / 理念体）— 最终关卡第二战</h4>
+      <div class="boss-location">Sector 6 · 轨道电梯上层</div>
+      <table class="info-table">
+        <tr><td>弱点</td><td>紫色头部（骇入后呈黄橙色发光时暴露）</td></tr>
+        <tr><td>核心打法</td><td>Cleanse 净化 → 瞄准头部 → 重火力倾泻。Idea 会束缚休，此时需要反骇入（红色行变红时操作）。最终阶段小心地面红色瞄准圈，持续移动。</td></tr>
+      </table>
+    </div>
+
+    <!-- Abiosis (Final) -->
+    <div class="boss-card">
+      <h4>⚫ Abiosis（终焉体）— 最终 Boss</h4>
+      <div class="boss-location">尾声 · 月球表面</div>
+      <table class="info-table">
+        <tr><td>阶段</td><td>单阶段，街机风格射击战</td></tr>
+        <tr><td>核心打法</td><td>戴安娜骇入 → 休蓄力巨型武器 → 瞄准光标对准 Abiosis 各部位射击。<strong>2 发命中即可击杀</strong>，但你<b>只能承受 1 次攻击</b>。注意闪避 Boss 的攻击波。</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 新手指南 ========== -->
+<section class="section" id="beginners">
+  <div class="container">
+    <h2 class="section-title">新手指南</h2>
+    <p class="section-subtitle">前 3 小时最重要的 8 条生存法则</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-icon">1</div>
+        <h3>先黑后打，铁律不变</h3>
+        <p>未骇入的敌人对子弹几乎免疫。养成条件反射——遭遇任何敌人，先让戴安娜骇入，再开枪。</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">2</div>
+        <h3>常回庇护所（Shelter）</h3>
+        <p>庇护所是唯一能<b>完全回血、补充 Repair Canister、升级固件、打印新武器、消费小屋硬币</b>的地方。每完成一个区域后务必回去一趟。</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">3</div>
+        <h3>尽早解锁物体扫描</h3>
+        <p>在庇护所的 Unit Printer 中优先打印<b>物体扫描（Object Scan）</b>模组——高亮收集品、升级组件和隐藏路径，极大减少遗漏。</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">4</div>
+        <h3>固件均衡升级</h3>
+        <p>休的外骨骼、主武器单元、戴安娜的骇入能力<b>均衡升至约 10 级</b>后再考虑专精。偏科容易在特定关卡卡关。</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">5</div>
+        <h3>拿到新能力就回溯</h3>
+        <p>Lim Eraser（Sector 2）和 Cleanse（Sector 5）可以清除之前区域的堵塞物，解锁隐藏房间。拿到后立刻回头探索。</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">6</div>
+        <h3>Overdrive 留给关键时刻</h3>
+        <p>Overdrive Protocol 条满后能同时打开所有附近敌人的弱点并定身。留给 Boss 硬直或阶段转换时爆发，不要浪费在杂兵身上。</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">7</div>
+        <h3>Boss 战前花光材料</h3>
+        <p>每场 Boss 战前在固件升级终端花光所有升级材料，优先升级主力武器，不要分散投资。</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">8</div>
+        <h3>最佳早期连招</h3>
+        <p>Stasis Net 定身 → 推进器近身 → Shockwave Gun 贴脸输出。对付大多数精英敌人和早期 Boss 都极其有效。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 隐藏结局 & 通关后 ========== -->
+<section class="section section-alt" id="endgame">
+  <div class="container">
+    <h2 class="section-title">隐藏结局 & 通关后内容</h2>
+    <p class="section-subtitle">真结局解锁路线 + 未知信号模式详解</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-icon">🔓</div>
+        <h3>真结局解锁步骤</h3>
+        <ol style="padding-left:18px; color:var(--text-dim); font-size:14px; line-height:2;">
+          <li>通关主线，观看默认结局</li>
+          <li>进入<b>「未知信号」（Unknown Signal）</b>模式</li>
+          <li>完成 5 大区域 100% 收集度</li>
+          <li>击败 5 个强化版 <b>MK-II Boss</b></li>
+          <li>完成隐藏密室全部 <b>10 项模拟挑战</b></li>
+          <li>获得<b>黑匣子模组（Black Box Mod）</b></li>
+          <li>装备黑匣子，再次击败最终 Boss Abiosis</li>
+          <li>观看<b>真结局</b></li>
+        </ol>
+      </div>
+      <div class="card">
+        <div class="card-icon">📡</div>
+        <h3>未知信号模式</h3>
+        <p style="margin-bottom:8px;">通关后解锁，是通往真结局的必经之路：</p>
+        <ul style="padding-left:18px; color:var(--text-dim); font-size:14px; line-height:2;">
+          <li>可自由选择区域回溯收集</li>
+          <li>每个区域的 Boss 升级为 <strong>MK-II 版本</strong>，招式更多、伤害更高</li>
+          <li>隐藏密室包含 10 个模拟挑战关卡，类似战斗竞技场</li>
+          <li>建议先玩未知信号模式，再进 New Game+</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-icon">🔄</div>
+        <h3>New Game+（二周目）</h3>
+        <p>继承所有武器、固件等级和收集品进度。敌人强度提升，但你可以用满级装备碾压前期关卡。适合补完遗漏的成就和体验不同流派。</p>
+        <p style="margin-top:8px; color:var(--accent); font-size:13px;">
+          小屋硬币（Cabin Coin）建议按连线（Bingo）方式消费，以获得最佳奖励：Mod、服装、机器人数据、训练模拟器。
+        </p>
+      </div>
+    </div>
+
+    <!-- 隐藏结局相关截图 -->
+    <div class="img-row img-row-3" style="margin-top:24px;">
+      <div class="guide-img img-16x9 img-missing">
+        <img src="images/hidden-chamber.jpg" alt="隐藏密室模拟挑战"
+             onload="this.parentElement.classList.remove('img-missing')"
+             onerror="this.parentElement.classList.add('img-missing')">
+        <div class="img-fallback"><div class="fb-icon">🚪</div><div class="fb-text">隐藏密室 - 10项模拟挑战<br>images/hidden-chamber.jpg</div></div>
+      </div>
+      <div class="guide-img img-16x9 img-missing">
+        <img src="images/black-box-mod.jpg" alt="黑匣子模组获取画面"
+             onload="this.parentElement.classList.remove('img-missing')"
+             onerror="this.parentElement.classList.add('img-missing')">
+        <div class="img-fallback"><div class="fb-icon">⬛</div><div class="fb-text">黑匣子模组（Black Box Mod）<br>images/black-box-mod.jpg</div></div>
+      </div>
+      <div class="guide-img img-16x9 img-missing">
+        <img src="images/true-ending.jpg" alt="真结局画面"
+             onload="this.parentElement.classList.remove('img-missing')"
+             onerror="this.parentElement.classList.add('img-missing')">
+        <div class="img-fallback"><div class="fb-icon">✨</div><div class="fb-text">真结局画面<br>images/true-ending.jpg</div></div>
+      </div>
+    </div>
+
+    <div class="warn-box" style="margin-top:24px;">
+      <strong>⚠️ 注意：</strong>Sector 3 的某个解密任务如果全程无伤完成，可以解锁隐藏可选 Boss <strong>Rogue Sentinel</strong>。建议固件全满后再去挑战。
+    </div>
+  </div>
+</section>
+
+<!-- ========== FAQ ========== -->
+<section class="section" id="faq">
+  <div class="container">
+    <h2 class="section-title">常见问题</h2>
+    <p class="section-subtitle">新玩家最常问的问题</p>
+
+    <div style="max-width:700px; margin:0 auto;">
+      <div class="faq-item">
+        <div class="faq-q">PRAGMATA 是什么类型的游戏？</div>
+        <div class="faq-a">科幻第三人称动作冒险，卡普空 RE 引擎开发。核心是<b>双角色系统</b>——戴安娜骇入暴露弱点，休用武器输出伤害。主线 10~15 小时，全收集约 20 小时。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">支持哪些平台？有中文吗？</div>
+        <div class="faq-a">PC（Steam）、PS5、Xbox Series X|S、Switch 2。官方简体/繁体中文同步首发。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">错过收集品能回头拿吗？</div>
+        <div class="faq-a">可以。通关后解锁章节选择功能，所有区域可自由回溯。拿到 Lim Eraser 和 Cleanse 后也可以随时返回之前区域。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">可以纯骇客流或纯射击流通关吗？</div>
+        <div class="faq-a">纯射击流非常困难，因为未骇入的敌人伤害减免极高。建议至少混合使用，游戏设计鼓励双系统配合。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">有联机模式吗？</div>
+        <div class="faq-a">纯单人剧情体验，没有多人或联机内容。</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">几个结局？怎么解锁真结局？</div>
+        <div class="faq-a"><b>2 个结局：</b>默认结局和隐藏真结局。真结局需要在「未知信号」模式中获得黑匣子模组后，装备它再打一次最终 Boss。详见上方「隐藏结局」章节。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 页脚 ========== -->
+<footer class="footer">
+  <p>PRAGMATA 攻略站 · 非官方玩家社区 · 内容整理自 Eurogamer / RockPaperShotgun / IGN / VGC / GameRiv 等媒体</p>
+  <p style="margin-top:4px;">PRAGMATA © CAPCOM CO., LTD. 保留所有权利 · 本页面仅供玩家参考</p>
+</footer>
+
+<script>
+  // 可折叠面板
+  function toggleAccordion(header) {
+    header.parentElement.classList.toggle('open');
+  }
+
+  // FAQ 折叠
+  document.querySelectorAll('.faq-item').forEach(item => {
+    item.addEventListener('click', () => item.classList.toggle('open'));
+  });
+</script>
+</body>
+</html>
