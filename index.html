@@ -281,7 +281,27 @@
     .img-row-2, .img-row-3 { grid-template-columns: 1fr; }
     .accordion-header h3 { font-size: 15px; }
     .info-table td:first-child { width: 80px; }
+  .page-nav { flex-direction: column; align-items: stretch; text-align: center; }
+  .page-nav .nav-center-group { justify-content: center; }
   }
+
+  /* ===== Page prev/next navigation ===== */
+  .page-nav {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 24px; padding-top: 16px;
+    border-top: 1px solid var(--border); gap: 12px; flex-wrap: wrap;
+  }
+  .page-nav a {
+    color: var(--accent); text-decoration: none; font-size: 13px;
+    padding: 8px 16px; border-radius: 20px;
+    border: 1px solid var(--border); background: var(--bg-card);
+    transition: all 0.2s; display: inline-flex; align-items: center; gap: 6px;
+    white-space: nowrap;
+  }
+  .page-nav a:hover { border-color: var(--accent); color: #fff; background: var(--bg-elevated); }
+  .page-nav .nav-center-group { display: flex; gap: 8px; }
+  .page-nav .nav-all { color: var(--gold); border-color: rgba(240, 192, 64, 0.25); }
+  .page-nav .nav-all:hover { border-color: var(--gold); color: var(--gold); }
 </style>
 </head>
 <body>
@@ -403,7 +423,7 @@
     <p class="section-subtitle">Complete walkthrough for all 6 sectors · Click to expand detailed guides</p>
 
     <!-- Sector 1 -->
-    <div class="accordion" style="margin-bottom: 14px;">
+    <div class="accordion" id="sector-1" style="margin-bottom: 14px;">
       <div class="accordion-header" onclick="toggleAccordion(this)">
         <h3><span style="color:var(--accent);">Sector 01</span> Solar Power Plant <span class="tag tag-boss">Boss: SectorGuard</span></h3>
         <span class="arrow">▸</span>
@@ -430,12 +450,20 @@
           <div class="tip-box">
             <strong>💡 Backtracking Tip:</strong> Safe Box #3 and Pure Lunum require the <strong>Lim Eraser</strong> obtained from Sector 2 before you can return and collect them. At the Power Distribution Center, take the elevator up → jump over the left railing → use Lim Eraser to clear the blue Lunafilament-sealed door → defeat multiple enemy waves and collect.
           </div>
+
+          <div class="page-nav">
+            <span></span>
+            <span class="nav-center-group">
+              <a href="javascript:void(0)" onclick="goToSector('sector-2')">下一篇：Sector 02 大规模生产区 ▸</a>
+              <a href="#sectors" class="nav-all">▲ 查看所有Sector攻略</a>
+            </span>
+          </div>
         </div>
       </div>
     </div>
 
     <!-- Sector 2 -->
-    <div class="accordion" style="margin-bottom: 14px;">
+    <div class="accordion" id="sector-2" style="margin-bottom: 14px;">
       <div class="accordion-header" onclick="toggleAccordion(this)">
         <h3><span style="color:var(--accent);">Sector 02</span> Mass Production Array <span class="tag tag-boss">Boss: Creator</span></h3>
         <span class="arrow">▸</span>
@@ -461,12 +489,20 @@
           <div class="tip-box">
             <strong>💡 Recommendation:</strong> After obtaining the Lim Eraser, immediately return to Sector 1 to collect the previously inaccessible Safe Box #3. Ensure you have sufficient Repair Canisters before the Creator boss fight.
           </div>
+
+          <div class="page-nav">
+            <a href="javascript:void(0)" onclick="goToSector('sector-1')">◂ 上一篇：Sector 01 太阳能发电站</a>
+            <span class="nav-center-group">
+              <a href="javascript:void(0)" onclick="goToSector('sector-3')">下一篇：Sector 03 生态穹顶 ▸</a>
+              <a href="#sectors" class="nav-all">▲ 查看所有Sector攻略</a>
+            </span>
+          </div>
         </div>
       </div>
     </div>
 
     <!-- Sector 3 -->
-    <div class="accordion" style="margin-bottom: 14px;">
+    <div class="accordion" id="sector-3" style="margin-bottom: 14px;">
       <div class="accordion-header" onclick="toggleAccordion(this)">
         <h3><span style="color:var(--accent);">Sector 03</span> Terra Dome <span class="tag tag-boss">Boss: Garden Keeper</span></h3>
         <span class="arrow">▸</span>
@@ -486,12 +522,20 @@
             <li>After the story encounter with <b>Eight</b>, proceed to the underground Terrarium area</li>
             <li>Restart the underground Lim Regulator to trigger the <b>Garden Keeper</b> (giant robot) boss fight</li>
           </ol>
+
+          <div class="page-nav">
+            <a href="javascript:void(0)" onclick="goToSector('sector-2')">◂ 上一篇：Sector 02 大规模生产区</a>
+            <span class="nav-center-group">
+              <a href="javascript:void(0)" onclick="goToSector('sector-4')">下一篇：Sector 04 月矿矿区 ▸</a>
+              <a href="#sectors" class="nav-all">▲ 查看所有Sector攻略</a>
+            </span>
+          </div>
         </div>
       </div>
     </div>
 
     <!-- Sector 4 -->
-    <div class="accordion" style="margin-bottom: 14px;">
+    <div class="accordion" id="sector-4" style="margin-bottom: 14px;">
       <div class="accordion-header" onclick="toggleAccordion(this)">
         <h3><span style="color:var(--accent);">Sector 04</span> Lunum Mines <span class="tag tag-boss">Boss: Air Raider → LunaDigger</span></h3>
         <span class="arrow">▸</span>
@@ -515,12 +559,20 @@
           <div class="warn-box">
             <strong>⚠️ Warning:</strong> LunaDigger is the mid-game difficulty spike. Phase 1 requires hacking within an extremely short window (Auto Hack is practically mandatory). In Phase 2, you can hack the small drones to turn them against the Boss. See the Boss Strategy section below for full details.
           </div>
+
+          <div class="page-nav">
+            <a href="javascript:void(0)" onclick="goToSector('sector-3')">◂ 上一篇：Sector 03 生态穹顶</a>
+            <span class="nav-center-group">
+              <a href="javascript:void(0)" onclick="goToSector('sector-5')">下一篇：Sector 05 实验语用学 ▸</a>
+              <a href="#sectors" class="nav-all">▲ 查看所有Sector攻略</a>
+            </span>
+          </div>
         </div>
       </div>
     </div>
 
     <!-- Sector 5 -->
-    <div class="accordion" style="margin-bottom: 14px;">
+    <div class="accordion" id="sector-5" style="margin-bottom: 14px;">
       <div class="accordion-header" onclick="toggleAccordion(this)">
         <h3><span style="color:var(--accent);">Sector 05</span> Experimental Pragmatics <span class="tag tag-hack">Linear · No Collectibles</span></h3>
         <span class="arrow">▸</span>
@@ -545,12 +597,20 @@
           <div class="warn-box">
             <strong>⚠️ Before Leaving:</strong> There is no missable content in this sector, but after obtaining Cleanse, immediately backtrack to previous sectors to clear red Lunafilament and collect missed items.
           </div>
+
+          <div class="page-nav">
+            <a href="javascript:void(0)" onclick="goToSector('sector-4')">◂ 上一篇：Sector 04 月矿矿区</a>
+            <span class="nav-center-group">
+              <a href="javascript:void(0)" onclick="goToSector('sector-6')">下一篇：Sector 06 中央港 ▸</a>
+              <a href="#sectors" class="nav-all">▲ 查看所有Sector攻略</a>
+            </span>
+          </div>
         </div>
       </div>
     </div>
 
     <!-- Sector 6 -->
-    <div class="accordion" style="margin-bottom: 14px;">
+    <div class="accordion" id="sector-6" style="margin-bottom: 14px;">
       <div class="accordion-header" onclick="toggleAccordion(this)">
         <h3><span style="color:var(--accent);">Sector 06</span> Central Port <span class="tag tag-boss">Boss: Sentinel → Eight/Idea → Abiosis</span></h3>
         <span class="arrow">▸</span>
@@ -575,12 +635,20 @@
           <div class="tip-box">
             <strong>💡 True Ending Hint:</strong> To unlock the hidden true ending, you must first obtain the <b>Black Box Mod</b> in "Unknown Signal" mode, equip it, and then defeat the final boss again. See the Hidden Ending section below for full details.
           </div>
+
+          <div class="page-nav">
+            <a href="javascript:void(0)" onclick="goToSector('sector-5')">◂ 上一篇：Sector 05 实验语用学</a>
+            <span class="nav-center-group">
+              <a href="javascript:void(0)" onclick="goToSector('sector-epilogue')">下一篇：终章 ▸</a>
+              <a href="#sectors" class="nav-all">▲ 查看所有Sector攻略</a>
+            </span>
+          </div>
         </div>
       </div>
     </div>
 
     <!-- Epilogue -->
-    <div class="accordion">
+    <div class="accordion" id="sector-epilogue">
       <div class="accordion-header" onclick="toggleAccordion(this)">
         <h3><span style="color:var(--accent2);">Epilogue</span> Final Showdown</h3>
         <span class="arrow">▸</span>
@@ -589,6 +657,13 @@
         <div class="accordion-content">
           <p style="color:var(--text-dim);">Use the Eraser to defeat Abiosis's final form and follow Diana to complete the game. The epilogue is purely a cinematic sequence with no collectibles.</p>
           <p style="color:var(--accent); margin-top:8px;">Unlocked after clearing: Unknown Signal mode, New Game+, and chapter-select for backtracking collectibles.</p>
+
+          <div class="page-nav">
+            <a href="javascript:void(0)" onclick="goToSector('sector-6')">◂ 上一篇：Sector 06 中央港</a>
+            <span class="nav-center-group">
+              <a href="#sectors" class="nav-all">▲ 查看所有Sector攻略</a>
+            </span>
+          </div>
         </div>
       </div>
     </div>
@@ -603,7 +678,7 @@
 
     <!-- SectorGuard -->
     <div class="boss-card">
-      <h4>🔴 SectorGuard — Solar Power Plant Guardian</h4>
+      <h4 id="boss-sectorguard">🔴 SectorGuard — Solar Power Plant Guardian</h4>
       <div class="boss-location">Sector 1 · The Concourse (top floor)</div>
       <div>
         <table class="info-table">
@@ -614,11 +689,19 @@
           <tr><td>Burst Window</td><td>Phase 2: Stasis Net immobilize → Decode node → Overdrive Protocol → unload everything on the fuel tank</td></tr>
         </table>
       </div>
+
+      <div class="page-nav">
+        <span></span>
+        <span class="nav-center-group">
+          <a href="#boss-creator">下一篇：Creator ▸</a>
+          <a href="#bosses" class="nav-all">▲ 查看所有Boss攻略</a>
+        </span>
+      </div>
     </div>
 
     <!-- Creator -->
     <div class="boss-card">
-      <h4>🟡 Creator (Giant Robot) — Mass Production Array Ruler</h4>
+      <h4 id="boss-creator">🟡 Creator (Giant Robot) — Mass Production Array Ruler</h4>
       <div class="boss-location">Sector 2 · Comm Tower Plaza (requires hacking 5 beacons to unlock the gate first)</div>
 <table class="info-table">
         <tr><td>Weak Points</td><td>Face; underside weak point exposed after a successful hack</td></tr>
@@ -626,32 +709,56 @@
         <tr><td>Core Strategy</td><td>Maintain mid-range. First destroy the glowing hack jammers on its limbs and head to lift Diana's hacking lock. Once hacked OPEN, attack the underside weak point. The Boss's arm sweeps have wide range — dodge into the attack direction to leverage i-frames. Strafe continuously during laser attacks.</td></tr>
         <tr><td>Ultimate Attack Counter</td><td>When the Boss charges up and the entire arena turns red, <b>climb the Lunafilament pillars</b> that spawn in the arena to avoid the attack — failing to do so reduces your HP to 1. A timed hacking sequence follows after defeating it — failing this results in instant death.</td></tr>
       </table>
+
+      <div class="page-nav">
+        <a href="#boss-sectorguard">◂ 上一篇：SectorGuard</a>
+        <span class="nav-center-group">
+          <a href="#boss-garden-keeper">下一篇：Garden Keeper ▸</a>
+          <a href="#bosses" class="nav-all">▲ 查看所有Boss攻略</a>
+        </span>
+      </div>
     </div>
 
     <!-- Garden Keeper -->
     <div class="boss-card">
-      <h4>🟢 Garden Keeper (Giant Plant Robot) — Terra Dome Guardian</h4>
+      <h4 id="boss-garden-keeper">🟢 Garden Keeper (Giant Plant Robot) — Terra Dome Guardian</h4>
       <div class="boss-location">Sector 3 · Underground Terrarium</div>
       <table class="info-table">
         <tr><td>Weak Points</td><td>Head, underside, tail (watch body and tail movements to identify which part is currently exposed)</td></tr>
         <tr><td>Recommended Gear</td><td>Fire-based weapons (bonus damage vs. plant-type enemies), Charge Piercer, Homing Missiles</td></tr>
         <tr><td>Core Strategy</td><td>Hack first, then attack. The Boss's moves are wide and dramatic but come with clear telegraphs. Attack the head when it's lowered; attack the tail after it performs a tail swipe. The underside weak point is briefly exposed after the Boss is staggered.</td></tr>
       </table>
+
+      <div class="page-nav">
+        <a href="#boss-creator">◂ 上一篇：Creator</a>
+        <span class="nav-center-group">
+          <a href="#boss-air-raider">下一篇：Air Raider ▸</a>
+          <a href="#bosses" class="nav-all">▲ 查看所有Boss攻略</a>
+        </span>
+      </div>
     </div>
 
     <!-- Air Raider -->
     <div class="boss-card">
-      <h4>⚪ Air Raider — Mine Warehouse Boss</h4>
+      <h4 id="boss-air-raider">⚪ Air Raider — Mine Warehouse Boss</h4>
       <div class="boss-location">Sector 4 · Warehouse</div>
       <table class="info-table">
         <tr><td>Core Strategy</td><td>Use the <b>mining drills</b> scattered around the arena as mobile platforms and cover. Lock on with Homing Missiles while the Boss hovers in the air. Standard hack → damage loop once grounded. Watch out for fall hazards near the arena edges.</td></tr>
         <tr><td>Recommended Gear</td><td>Homing Missiles, Stasis Net, Charge Piercer</td></tr>
       </table>
+
+      <div class="page-nav">
+        <a href="#boss-garden-keeper">◂ 上一篇：Garden Keeper</a>
+        <span class="nav-center-group">
+          <a href="#boss-lunadigger">下一篇：LunaDigger ▸</a>
+          <a href="#bosses" class="nav-all">▲ 查看所有Boss攻略</a>
+        </span>
+      </div>
     </div>
 
     <!-- LunaDigger -->
     <div class="boss-card">
-      <h4>🟣 LunaDigger — Difficulty Spike</h4>
+      <h4 id="boss-lunadigger">🟣 LunaDigger — Difficulty Spike</h4>
       <div class="boss-location">Sector 4 · Nexus Tower Underground Nest</div>
 <table class="info-table">
         <tr><td>Phases</td><td><strong>2 phases</strong> (switches at 50% HP)</td></tr>
@@ -663,35 +770,66 @@
         <tr><td>Phase 2 Strategy</td><td>The entire body becomes vulnerable, but the Boss adds missiles and <b>small burrowing drones</b>. <strong>Key tactic: hack the drones to turn them against the Boss</strong> — each drone deals ~2000 damage. Unload Homing Missiles on the Boss when it's stationary.</td></tr>
         <tr><td>Reward</td><td>Shelter License Key 4 — unlocks advanced Unit Printer upgrades and the Cabin Club Director Board</td></tr>
       </table>
+
+      <div class="page-nav">
+        <a href="#boss-air-raider">◂ 上一篇：Air Raider</a>
+        <span class="nav-center-group">
+          <a href="#boss-sentinel">下一篇：Sentinel ▸</a>
+          <a href="#bosses" class="nav-all">▲ 查看所有Boss攻略</a>
+        </span>
+      </div>
     </div>
 
     <!-- Sentinel -->
     <div class="boss-card">
-      <h4>🔵 Sentinel — Final Stage, Fight 1</h4>
+      <h4 id="boss-sentinel">🔵 Sentinel — Final Stage, Fight 1</h4>
       <div class="boss-location">Sector 6 · Orbital Elevator</div>
       <table class="info-table">
         <tr><td>Core Strategy</td><td>Stay close and use <strong>Cleanse</strong> to remove corruption zones. Dodge the charge attacks. When the Boss winds up a burst attack, use thrusters to dash away. Concentrate fire after a successful hack.</td></tr>
       </table>
+
+      <div class="page-nav">
+        <a href="#boss-lunadigger">◂ 上一篇：LunaDigger</a>
+        <span class="nav-center-group">
+          <a href="#boss-eight-idea">下一篇：Eight / Idea ▸</a>
+          <a href="#bosses" class="nav-all">▲ 查看所有Boss攻略</a>
+        </span>
+      </div>
     </div>
 
     <!-- Eight / Idea -->
     <div class="boss-card">
-      <h4>🟠 Eight / Idea — Final Stage, Fight 2</h4>
+      <h4 id="boss-eight-idea">🟠 Eight / Idea — Final Stage, Fight 2</h4>
       <div class="boss-location">Sector 6 · Orbital Elevator Upper Level</div>
       <table class="info-table">
         <tr><td>Weak Point</td><td>Purple head (exposed when it glows yellow-orange after being hacked)</td></tr>
         <tr><td>Core Strategy</td><td>Cleanse to purify → aim for the head → unload heavy firepower. Idea will attempt to restrain Hugh — counter-hack when the red prompt line turns red. In the final stretch, watch for red target circles on the ground and keep moving.</td></tr>
       </table>
+
+      <div class="page-nav">
+        <a href="#boss-sentinel">◂ 上一篇：Sentinel</a>
+        <span class="nav-center-group">
+          <a href="#boss-abiosis">下一篇：Abiosis ▸</a>
+          <a href="#bosses" class="nav-all">▲ 查看所有Boss攻略</a>
+        </span>
+      </div>
     </div>
 
     <!-- Abiosis (Final) -->
     <div class="boss-card">
-      <h4>⚫ Abiosis (The Final Form) — Last Boss</h4>
+      <h4 id="boss-abiosis">⚫ Abiosis (The Final Form) — Last Boss</h4>
       <div class="boss-location">Epilogue · Lunar Surface</div>
       <table class="info-table">
         <tr><td>Phases</td><td>Single phase, arcade-style shooting setpiece</td></tr>
         <tr><td>Core Strategy</td><td>Diana hacks → Hugh charges a colossal weapon → aim the reticle at Abiosis's body parts and fire. <strong>2 hits are enough to kill</strong>, but you can <b>only survive 1 hit</b>. Watch for and dodge the Boss's attack waves.</td></tr>
       </table>
+
+      <div class="page-nav">
+        <a href="#boss-eight-idea">◂ 上一篇：Eight / Idea</a>
+        <span class="nav-center-group">
+          <a href="#bosses" class="nav-all">▲ 查看所有Boss攻略</a>
+        </span>
+      </div>
     </div>
   </div>
 </section>
@@ -841,6 +979,15 @@
   // Accordion toggle
   function toggleAccordion(header) {
     header.parentElement.classList.toggle('open');
+  }
+
+  // Navigate to a sector (expand accordion + scroll)
+  function goToSector(id) {
+    var el = document.getElementById(id);
+    if (el) {
+      el.classList.add('open');
+      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
   }
 
   // FAQ toggle
