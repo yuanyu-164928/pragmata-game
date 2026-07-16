@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amari — Spanish Tapas & Wine in Brighton</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paprika: #B83120;
+    --rioja: #7B1A2A;
+    --clay: #C9724A;
+    --saffron: #D4A040;
+    --amber: #E8B84B;
+    --azulejo: #2C4A7C;
+    --cream: #FDF6EF;
+    --warm-white: #FEFAF6;
+    --dark: #1A1410;
+    --dark-warm: #2C2018;
+    --text: #3D3228;
+    --text-dim: #8B7E74;
+    --border: #E8DDD0;
+    --olive: #6B7B3A;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+
+  body {
+    font-family: 'Cormorant Garamond', 'Georgia', serif;
+    color: var(--text);
+    background: var(--cream);
+    line-height: 1.8;
+    font-size: 17px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, h3, h4 { font-family: 'Playfair Display', 'Georgia', serif; }
+
+  /* ── Decorative ── */
+  .gold-line {
+    width: 50px; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--saffron), transparent);
+    margin: 0 auto;
+  }
+  .gold-line.left { margin: 0; }
+
+  /* Azulejo-inspired tile pattern */
+  .tile-border {
+    position: relative;
+  }
+  .tile-border::after {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 4px;
+    background: repeating-linear-gradient(
+      90deg,
+      var(--paprika) 0px, var(--paprika) 10px,
+      transparent 10px, transparent 14px,
+      var(--saffron) 14px, var(--saffron) 24px,
+      transparent 24px, transparent 28px,
+      var(--azulejo) 28px, var(--azulejo) 38px,
+      transparent 38px, transparent 42px
+    );
+    opacity: 0.6;
+  }
+
+  /* Subtle tile background pattern */
+  .bg-tiles {
+    position: relative;
+  }
+  .bg-tiles::before {
+    content: ''; position: absolute; inset: 0; pointer-events: none; z-index: 0;
+    background-image:
+      linear-gradient(45deg, rgba(184,49,32,0.03) 25%, transparent 25%),
+      linear-gradient(-45deg, rgba(184,49,32,0.03) 25%, transparent 25%),
+      linear-gradient(45deg, transparent 75%, rgba(44,74,124,0.02) 75%),
+      linear-gradient(-45deg, transparent 75%, rgba(44,74,124,0.02) 75%);
+    background-size: 40px 40px;
+    background-position: 0 0, 0 20px, 20px -20px, -20px 0px;
+  }
+
+  /* Chef's pick star */
+  .chef-pick {
+    display: inline-block;
+    font-size: 0.6rem; color: var(--paprika);
+    letter-spacing: 2px; text-transform: uppercase;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    margin-left: 8px; vertical-align: middle;
+  }
+
+  /* ── Navigation ── */
+  nav {
+    position: fixed; top: 0; left: 0; width: 100%; z-index: 100;
+    background: rgba(253, 248, 243, 0.9);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+  }
+  .nav-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 32px;
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem; font-weight: 600; color: var(--paprika);
+    letter-spacing: 3px;
+  }
+  .nav-links { display: flex; gap: 32px; list-style: none; align-items: center; }
+  .nav-links a {
+    color: var(--dark); text-decoration: none;
+    font-family: 'DM Sans', 'Segoe UI', sans-serif;
+    font-size: 0.8rem; font-weight: 500; letter-spacing: 1.5px; text-transform: uppercase;
+    transition: color 0.3s; position: relative;
+  }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1px;
+    background: var(--paprika); transition: width 0.3s ease;
+  }
+  .nav-links a:hover { color: var(--paprika); }
+  .nav-links a:hover::after { width: 100%; }
+
+  .btn-book {
+    background: var(--paprika) !important; color: #fff !important;
+    padding: 10px 22px !important; border-radius: 2px !important;
+    font-weight: 600 !important;
+    transition: all 0.3s ease !important;
+    border: 1px solid var(--paprika) !important;
+  }
+  .btn-book::after { display: none !important; }
+  .btn-book:hover {
+    background: transparent !important;
+    color: var(--paprika) !important;
+  }
+
+  /* ── Hero ── */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    text-align: center;
+    background:
+      linear-gradient(160deg, rgba(26,12,8,0.88) 0%, rgba(44,20,16,0.72) 30%, rgba(31,18,13,0.78) 60%, rgba(18,10,6,0.92) 100%),
+      url('images/hero.jpg') center/cover no-repeat;
+    position: relative; overflow: hidden;
+    padding: 120px 24px 80px;
+  }
+  .hero::before {
+    content: ''; position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse at 30% 50%, rgba(184, 49, 32, 0.15) 0%, transparent 55%),
+      radial-gradient(ellipse at 65% 30%, rgba(212, 160, 64, 0.08) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 80%, rgba(123, 26, 42, 0.08) 0%, transparent 40%);
+  }
+  .hero::after {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(212,160,64,0.35), transparent);
+  }
+  .hero-content { position: relative; z-index: 1; max-width: 720px; }
+  .hero-ornament { font-size: 1.6rem; margin-bottom: 20px; color: var(--saffron); letter-spacing: 6px; opacity: 0.7; }
+  .hero-badge {
+    display: inline-block;
+    border: 1px solid rgba(212,160,64,0.4);
+    color: var(--amber); padding: 8px 24px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.75rem; letter-spacing: 2.5px; text-transform: uppercase;
+    margin-bottom: 28px;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 4rem; color: #fff; line-height: 1.12;
+    margin-bottom: 18px; font-weight: 500; letter-spacing: 1px;
+  }
+  .hero h1 em { color: var(--paprika); font-style: italic; font-weight: 400; }
+  .hero-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem; color: rgba(255,255,255,0.55);
+    margin-bottom: 36px; line-height: 1.7; max-width: 500px;
+    margin-left: auto; margin-right: auto;
+  }
+  .hero-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .btn {
+    display: inline-block; padding: 14px 34px; border-radius: 2px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600; font-size: 0.78rem; letter-spacing: 2px;
+    text-decoration: none; text-transform: uppercase;
+    transition: all 0.35s ease; cursor: pointer;
+  }
+  .btn-primary {
+    background: var(--paprika); color: #fff;
+    border: 1px solid var(--paprika);
+  }
+  .btn-primary:hover {
+    background: transparent; color: #fff;
+    border-color: var(--amber); box-shadow: 0 0 24px rgba(212,160,64,0.12);
+  }
+  .btn-outline {
+    background: transparent; color: #fff;
+    border: 1px solid rgba(255,255,255,0.25);
+  }
+  .btn-outline:hover { border-color: var(--amber); color: var(--amber); }
+
+  /* ── Sections ── */
+  section { padding: 100px 24px; }
+  .container { max-width: 1080px; margin: 0 auto; }
+  .section-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.72rem; text-transform: uppercase; letter-spacing: 4px;
+    color: var(--paprika); margin-bottom: 8px;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.6rem; color: var(--dark);
+    margin-bottom: 14px; font-weight: 500;
+  }
+  .section-title em { color: var(--paprika); font-style: italic; }
+
+  /* ── About ── */
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+  }
+  .about-text { font-size: 1.05rem; color: var(--text-dim); }
+  .about-text p + p { margin-top: 20px; }
+  .about-text .dropcap::first-letter {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.4rem; float: left; line-height: 0.8;
+    padding-right: 10px; padding-top: 6px;
+    color: var(--paprika); font-style: italic;
+  }
+  .about-img-wrap { position: relative; }
+  .about-img {
+    width: 100%; aspect-ratio: 3/4; border-radius: 2px;
+    background: linear-gradient(160deg, #1f1410 0%, #2c1c14 40%, #3d2a18 100%);
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+  }
+  .about-img img {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: cover;
+  }
+  .about-img-inner {
+    text-align: center; line-height: 1.6;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem; color: rgba(255,255,255,0.18);
+    position: relative; z-index: 1;
+  }
+  .about-img-inner .tile-icon { font-size: 2.8rem; margin-bottom: 8px; }
+  .about-img-frame {
+    position: absolute; inset: 12px; border: 1px solid rgba(212,160,64,0.2);
+    pointer-events: none;
+  }
+  .about-accolade {
+    position: absolute; bottom: -14px; right: -14px;
+    background: var(--cream); border: 1px solid var(--saffron);
+    padding: 12px 18px;
+    font-family: 'Playfair Display', serif;
+    font-size: 0.85rem; color: var(--paprika);
+    letter-spacing: 2px;
+  }
+
+  /* ── Experience ── */
+  .exp-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; text-align: center; }
+  .exp-item-icon { font-size: 2.4rem; margin-bottom: 12px; }
+  .exp-item h4 { font-family: 'Playfair Display', serif; color: #fff; font-size: 1.1rem; margin-bottom: 6px; }
+  .exp-item p { font-size: 0.88rem; color: rgba(255,255,255,0.45); line-height: 1.6; }
+
+  @media (max-width: 900px) { .exp-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 480px) { .exp-grid { grid-template-columns: 1fr; } }
+  #menu { background: var(--warm-white); position: relative; }
+  #menu::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(184,49,32,0.12), transparent);
+  }
+  .menu-intro { text-align: center; margin-bottom: 56px; }
+  .menu-note {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.75rem; color: var(--text-dim); letter-spacing: 1.5px; text-transform: uppercase;
+  }
+  .menu-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 48px 60px; }
+  .menu-category-header {
+    display: flex; align-items: center; gap: 16px; margin-bottom: 24px;
+  }
+  .menu-category-header .gold-line { flex-shrink: 0; width: 36px; }
+  .menu-category h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.35rem; color: var(--dark);
+    font-weight: 500; white-space: nowrap;
+  }
+  .menu-category-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.9rem; color: var(--paprika); font-style: italic;
+    margin-bottom: 20px;
+  }
+  .menu-item {
+    padding: 13px 0; border-bottom: 1px solid var(--border);
+  }
+  .menu-item:last-child { border-bottom: none; }
+  .menu-item-header {
+    display: flex; justify-content: space-between; align-items: baseline;
+  }
+  .menu-item-name {
+    font-weight: 600; color: var(--dark); font-size: 1.02rem;
+  }
+  .menu-item-price {
+    color: var(--paprika); font-weight: 600; white-space: nowrap;
+    margin-left: 14px; font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+  }
+  .menu-item-desc {
+    font-size: 0.9rem; color: var(--text-dim); margin-top: 3px;
+    line-height: 1.5;
+  }
+
+  /* ── Drink Section ── */
+  .drinks-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px;
+  }
+  .drink-card {
+    text-align: center; padding: 32px 20px;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    transition: border-color 0.3s ease;
+  }
+  .drink-card:hover { border-color: var(--paprika); }
+  .drink-icon { font-size: 2rem; margin-bottom: 12px; }
+  .drink-card h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem; color: var(--dark); margin-bottom: 8px;
+  }
+  .drink-card p {
+    font-size: 0.9rem; color: var(--text-dim); line-height: 1.6;
+  }
+
+  /* ── Gallery ── */
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-rows: 280px 280px;
+    gap: 12px;
+  }
+  .gallery-item {
+    position: relative; overflow: hidden; border-radius: 2px;
+    background: linear-gradient(160deg, #2c1c14 0%, #3d2a18 100%);
+  }
+  .gallery-item img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 0.6s ease;
+  }
+  .gallery-item:hover img { transform: scale(1.04); }
+  .gallery-item:first-child { grid-row: span 2; }
+  .gallery-item::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.25) 0%, transparent 40%);
+    opacity: 0; transition: opacity 0.3s ease;
+  }
+  .gallery-item:hover::after { opacity: 1; }
+  .gallery-label {
+    position: absolute; bottom: 16px; left: 16px; z-index: 1;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase;
+    color: #fff; opacity: 0; transition: opacity 0.3s ease;
+  }
+  .gallery-item:hover .gallery-label { opacity: 1; }
+
+  @media (max-width: 768px) {
+    .gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: 220px 220px 220px; }
+    .gallery-item:first-child { grid-row: span 1; grid-column: span 2; }
+  }
+
+  /* ── Press / Reviews ── */
+  #press { background: var(--dark); color: rgba(255,255,255,0.8); text-align: center; }
+  #press .section-title { color: #fff; }
+  #press .section-label { color: var(--saffron); }
+  .press-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 32px;
+    margin-top: 48px;
+  }
+  .press-card {
+    padding: 36px 28px; border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 2px; text-align: center;
+    transition: border-color 0.3s ease;
+  }
+  .press-card:hover { border-color: rgba(212,160,64,0.3); }
+  .press-outlet {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.7rem; letter-spacing: 2.5px; text-transform: uppercase;
+    color: var(--saffron); margin-bottom: 8px;
+  }
+  .press-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem; font-style: italic; color: rgba(255,255,255,0.7);
+    line-height: 1.7; margin-bottom: 12px;
+  }
+
+  /* ── Guest Reviews ── */
+  .reviews-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 28px;
+  }
+  .review-card {
+    background: #fff; padding: 32px; border-radius: 2px;
+    border: 1px solid var(--border);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+  }
+  .review-stars { color: var(--amber); font-size: 0.95rem; margin-bottom: 14px; letter-spacing: 2px; }
+  .review-text { color: var(--text-dim); font-style: italic; margin-bottom: 14px; line-height: 1.7; }
+  .review-author { font-weight: 600; color: var(--dark); font-size: 0.9rem; font-family: 'DM Sans', sans-serif; }
+
+  /* ── Contact ── */
+  #contact { background: var(--dark-warm); color: rgba(255,255,255,0.8); }
+  #contact .section-title { color: #fff; }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; }
+  .contact-info p {
+    margin-bottom: 14px; font-size: 1.02rem;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .contact-icon { color: var(--saffron); font-style: normal; }
+  .contact-info a { color: var(--saffron); text-decoration: none; transition: color 0.3s; }
+  .contact-info a:hover { color: var(--amber); }
+  .hours-table { width: 100%; border-collapse: collapse; }
+  .hours-table td {
+    padding: 11px 0; border-bottom: 1px solid rgba(255,255,255,0.07);
+    font-size: 0.98rem; font-family: 'DM Sans', sans-serif;
+  }
+  .hours-table td:last-child {
+    text-align: right; color: var(--saffron);
+    font-family: 'Cormorant Garamond', serif; font-size: 1rem;
+  }
+  .contact-note {
+    margin-top: 20px; padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.07);
+    font-size: 0.88rem; color: rgba(255,255,255,0.35);
+    line-height: 1.7; font-style: italic;
+  }
+
+  /* ── Footer ── */
+  footer {
+    text-align: center; padding: 32px 24px;
+    background: #120e0a; color: rgba(255,255,255,0.3);
+    font-family: 'DM Sans', sans-serif; font-size: 0.78rem;
+    letter-spacing: 1px;
+  }
+  footer p + p { margin-top: 6px; }
+
+  /* ── Reservation Modal ── */
+  .modal-overlay {
+    position: fixed; inset: 0; z-index: 999;
+    background: rgba(10, 8, 6, 0.78);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; visibility: hidden;
+    transition: opacity 0.35s ease, visibility 0.35s ease;
+    padding: 24px;
+  }
+  .modal-overlay.active { opacity: 1; visibility: visible; }
+
+  .modal {
+    background: var(--cream);
+    max-width: 500px; width: 100%;
+    border-radius: 2px;
+    position: relative;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.38);
+    transform: translateY(12px);
+    transition: transform 0.35s ease;
+    max-height: 90vh; overflow-y: auto;
+  }
+  .modal-overlay.active .modal { transform: translateY(0); }
+
+  .modal-close {
+    position: absolute; top: 16px; right: 20px;
+    background: none; border: none;
+    font-size: 1.3rem; color: var(--text-dim); cursor: pointer;
+    transition: color 0.3s; padding: 4px; line-height: 1;
+  }
+  .modal-close:hover { color: var(--paprika); }
+
+  .modal-header { padding: 40px 40px 0; text-align: center; }
+  .modal-header h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.7rem; color: var(--dark); font-weight: 500;
+  }
+  .modal-header .gold-line { margin-top: 10px; }
+
+  .modal-body { padding: 28px 40px 36px; }
+
+  .form-group { margin-bottom: 18px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+  .form-label {
+    display: block;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.72rem; font-weight: 600;
+    color: var(--dark); letter-spacing: 1.5px; text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .form-label .required { color: var(--paprika); }
+
+  .form-input, .form-select, .form-textarea {
+    width: 100%;
+    padding: 11px 14px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.98rem; color: var(--text);
+    background: #fff; border: 1px solid var(--border);
+    border-radius: 2px; outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    -webkit-appearance: none; appearance: none;
+  }
+  .form-input:focus, .form-select:focus, .form-textarea:focus {
+    border-color: var(--paprika);
+    box-shadow: 0 0 0 3px rgba(194,101,58,0.06);
+  }
+  .form-textarea { resize: vertical; min-height: 72px; }
+
+  .form-select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%238B7E74' d='M1.41 0L6 4.58 10.59 0 12 1.41l-6 6-6-6z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 14px center;
+    padding-right: 36px;
+  }
+
+  .form-error {
+    font-size: 0.75rem; color: #c0392b; margin-top: 4px; display: none;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .form-group.error .form-error { display: block; }
+  .form-group.error .form-input,
+  .form-group.error .form-select,
+  .form-group.error .form-textarea { border-color: #c0392b; }
+
+  .modal-footer { display: flex; gap: 12px; justify-content: center; padding-top: 2px; }
+  .btn-cancel {
+    background: transparent; color: var(--text-dim);
+    border: 1px solid var(--border); font-weight: 500;
+  }
+  .btn-cancel:hover { border-color: var(--text-dim); color: var(--text); }
+
+  /* Success state */
+  .modal-success { text-align: center; padding: 40px; display: none; }
+  .modal-success.show { display: block; }
+  .modal-success .success-icon { font-size: 2.6rem; margin-bottom: 16px; }
+  .modal-success h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem; color: var(--dark);
+  }
+  .modal-success p {
+    color: var(--text-dim); margin-top: 8px;
+    font-size: 0.98rem; line-height: 1.6;
+  }
+
+  /* ── Animations ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(22px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .reveal {
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards;
+  }
+
+  /* ── Mobile Nav ── */
+  .nav-toggle { display: none; background: none; border: none; font-size: 1.3rem; cursor: pointer; color: var(--dark); }
+
+  /* ── Responsive ── */
+  @media (max-width: 900px) {
+    .menu-grid { grid-template-columns: 1fr; gap: 40px; }
+    .drinks-grid { grid-template-columns: 1fr; gap: 20px; }
+  }
+
+  @media (max-width: 768px) {
+    .nav-toggle { display: block; }
+    .nav-links {
+      display: none; position: absolute; top: 100%; left: 0; width: 100%;
+      background: rgba(253,248,243,0.99); flex-direction: column;
+      padding: 20px 32px; gap: 14px;
+      border-bottom: 1px solid var(--border);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.07);
+    }
+    .nav-links.open { display: flex; }
+    .hero h1 { font-size: 2.6rem; }
+    .about-grid { grid-template-columns: 1fr; gap: 40px; }
+    .contact-grid { grid-template-columns: 1fr; gap: 36px; }
+    .section-title { font-size: 2rem; }
+    .about-img-wrap { order: -1; }
+    .about-accolade { display: none; }
+  }
+
+  @media (max-width: 480px) {
+    section { padding: 64px 20px; }
+    .hero h1 { font-size: 2.1rem; }
+    .hero-sub { font-size: 1rem; }
+    .nav-inner { padding: 12px 20px; }
+    .btn { padding: 12px 24px; font-size: 0.72rem; letter-spacing: 1px; }
+    .modal-header { padding: 32px 24px 0; }
+    .modal-body { padding: 22px 24px 30px; }
+    .form-row { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo">AMARI</div>
+    <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menu">☰</button>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#press">Press</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="javascript:void(0)" class="btn-book" data-reserve>Book a Table</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero tile-border">
+  <div class="hero-content">
+    <div class="hero-ornament">~</div>
+    <div class="hero-badge">★ Michelin Guide 2025 · Good Food Guide Top 100</div>
+    <h1>Spain, <em>in</em><br>Small Plates</h1>
+    <p class="hero-sub">A neighbourhood tapas bar on Baker Street — wood-fired, wine-soaked, and fiercely independent. Chef Iain Swainson cooks what the market gives him that morning.</p>
+    <div class="hero-btns">
+      <a href="#menu" class="btn btn-primary">See the Menu</a>
+      <a href="javascript:void(0)" class="btn btn-outline" data-reserve>Reserve</a>
+    </div>
+  </div>
+</section>
+
+<!-- About -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div>
+        <div class="section-label">Our Story</div>
+        <h2 class="section-title">A kitchen the size of a <em>postage stamp</em></h2>
+        <div class="gold-line left" style="margin-bottom:24px;"></div>
+        <div class="about-text">
+          <p class="dropcap">Amari opened in October 2024 with a simple belief: that the best meals in Spain don't happen in restaurants with tablecloths — they happen in cramped bars where the cook is three feet away, the wine pours freely, and every plate arrives when it's ready.</p>
+          <p>Chef Iain Swainson brought the idea back from stages across the Basque Country and Catalonia, after years leading kitchens at The Pass and Amarillo. He partnered with brothers Ali and Mo Razavi — the duo behind Brighton favourites Halisco and Anakuma — to build something that feels less like a restaurant and more like a house party in San Sebastián.</p>
+          <p>The dining room seats twenty. The kitchen is open. The menu changes constantly. What doesn't change: impeccable sourcing, a deep sherry list, and the kind of cooking that makes you order another round because you're not ready to leave.</p>
+        </div>
+      </div>
+      <div class="about-img-wrap">
+        <div class="about-img">
+          <img src="images/interior-1.jpg" alt="Amari dining room" onerror="this.style.display='none'">
+          <div class="about-img-inner">
+            <div class="tile-icon">✦</div>
+            Semi-open kitchen<br>at 15 Baker Street
+          </div>
+        </div>
+        <div class="about-img-frame"></div>
+        <div class="about-accolade">★ Good Food Guide · #67 in Britain</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- The Experience -->
+<section id="experience" style="background:var(--dark);color:rgba(255,255,255,0.85);text-align:center;padding:90px 24px;">
+  <div class="container" style="position:relative;z-index:1;">
+    <div class="section-label" style="color:var(--saffron);">The Experience</div>
+    <h2 class="section-title" style="color:#fff;">This is not a <em>restaurant</em></h2>
+    <p style="color:rgba(255,255,255,0.5);max-width:520px;margin:0 auto 48px;font-size:1.05rem;">It's a room above a shop on Baker Street where twenty strangers sit elbow-to-elbow, the kitchen is three feet away, and the person who cooked your croquetas walks them to the table.</p>
+
+    <div class="exp-grid">
+      <div class="exp-item">
+        <div class="exp-item-icon">🔥</div>
+        <h4>Open Kitchen</h4>
+        <p>Watch every plate come together from your seat. No walls, no secrets.</p>
+      </div>
+      <div class="exp-item">
+        <div class="exp-item-icon">👨‍🍳</div>
+        <h4>Chef's Table Service</h4>
+        <p>Iain or a member of his team brings each dish out and talks you through it.</p>
+      </div>
+      <div class="exp-item">
+        <div class="exp-item-icon">🍷</div>
+        <h4>Deep Sherry List</h4>
+        <p>Manzanilla, Fino, Amontillado — one of Brighton's most thoughtful Spanish wine selections.</p>
+      </div>
+      <div class="exp-item">
+        <div class="exp-item-icon">~</div>
+        <h4>Plates When Ready</h4>
+        <p>No starters, no mains — dishes arrive as the kitchen finishes them. As it works in Spain.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Menu -->
+<section id="menu" class="bg-tiles">
+  <div class="container">
+    <div class="menu-intro">
+      <div class="section-label">La Carta</div>
+      <h2 class="section-title">What's on the <em>pass</em> tonight</h2>
+      <p class="menu-note" style="margin-top:4px;">Sample menu — the real one changes with the seasons and the morning's delivery</p>
+    </div>
+    <div class="menu-grid">
+
+      <!-- Snacks -->
+      <div class="menu-category">
+        <div class="menu-category-header">
+          <div class="gold-line"></div>
+          <h3>Para Picar</h3>
+        </div>
+        <p class="menu-category-sub">Snacks to start</p>
+        <div class="menu-item">
+          <div class="menu-item-header"><span class="menu-item-name">Marinated Olives</span><span class="menu-item-price">£4</span></div>
+          <p class="menu-item-desc">Garlic, citrus zest, thyme, Arbequina olive oil</p>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-header"><span class="menu-item-name">Deep-Fried Olives</span><span class="menu-item-price">£5</span></div>
+          <p class="menu-item-desc">Manzanilla olives, crisp breadcrumb shell, smoked paprika salt</p>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-header"><span class="menu-item-name">Pan con Tomate</span><span class="menu-item-price">£6</span></div>
+          <p class="menu-item-desc">Toasted sourdough, crushed tomato, garlic, Arbequina oil</p>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-header"><span class="menu-item-name">Cantabric Anchovies</span><span class="menu-item-price">£8</span></div>
+          <p class="menu-item-desc">Imported from Santoña, golden olive oil, lemon zest, sourdough</p>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-header"><span class="menu-item-name">Jamón Ibérico</span><span class="menu-item-price">£12</span></div>
+          <p class="menu-item-desc">Acorn-fed, hand-carved to order, pan con tomate</p>
+        </div>
+      </div>
+
+      <!-- Small Plates -->
+      <div class="menu-category">
+        <div class="menu-category-header">
+          <div class="gold-line"></div>
+          <h3>Tapas</h3>
+        </div>
+        <p class="menu-category-sub">Small plates from the grill &amp; plancha</p>
+        <div class="menu-item">
+          <div class="menu-item-header"><span class="menu-item-name">Croquetas de Setas</span><span class="menu-item-price">£7</span></div>
+          <p class="menu-item-desc">Cep mushroom béchamel, crisp panko, truffle aioli <span class="chef-pick">★ Signature</span></p>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-header"><span class="menu-item-name">Gambas al Ajillo</span><span class="menu-item-price">£11</span></div>
+          <p class="menu-item-desc">King prawns, garlic butter, smoked paprika, velvety bisque <span class="chef-pick">★ Signature</span></p>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-header"><span class="menu-item-name">Padrón Peppers</span><span class="menu-item-price">£6.50</span></div>
+          <p class="menu-item-desc">Blistered on the plancha, rock salt, lemon</p>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-header"><span class="menu-item-name">Patatas Bravas</span><span class="menu-item-price">£7</span></div>
+          <p class="menu-item-desc">Triple-cooked, saffron aioli, bravas sauce, smoked paprika</p>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-header"><span class="menu-item-name">Torched Mackerel</span><span class="menu-item-price">£9</span></div>
+          <p class="menu-item-desc">Crisp skin, smoked cod's roe, olive juice, sorrel</p>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-header"><span class="menu-item-name">Chipirones</span><span class="menu-item-price">£8.50</span></div>
+          <p class="menu-item-desc">Tiny squid, squid ink, samphire, garlic</p>
+        </div>
+      </div>
+
+      <!-- Larger Plates -->
+      <div class="menu-category">
+        <div class="menu-category-header">
+          <div class="gold-line"></div>
+          <h3>Platos Grandes</h3>
+        </div>
+        <p class="menu-category-sub">Larger plates to share</p>
+        <div class="menu-item">
+          <div class="menu-item-header"><span class="menu-item-name">Red Wine Braised Beef Rib</span><span class="menu-item-price">£16</span></div>
+          <p class="menu-item-desc">Slow-cooked, chickpeas, tomato, peppercorn reduction <span class="chef-pick">★ Signature</span></p>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-header"><span class="menu-item-name">Hake a la Plancha</span><span class="menu-item-price">£14</span></div>
+          <p class="menu-item-desc">Crisp skin, romesco sauce, new potatoes</p>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-header"><span class="menu-item-name">Presa Ibérica</span><span class="menu-item-price">£18</span></div>
+          <p class="menu-item-desc">Iberian pork shoulder, confit garlic, piquillo peppers, roasting jus</p>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-header"><span class="menu-item-name">Whole Grilled Fish of the Day</span><span class="menu-item-price">MP</span></div>
+          <p class="menu-item-desc">Lemon, wild herbs, olive oil — simply done, perfectly timed</p>
+        </div>
+      </div>
+
+      <!-- Desserts -->
+      <div class="menu-category">
+        <div class="menu-category-header">
+          <div class="gold-line"></div>
+          <h3>Dulce</h3>
+        </div>
+        <p class="menu-category-sub">A sweet close</p>
+        <div class="menu-item">
+          <div class="menu-item-header"><span class="menu-item-name">Torrija</span><span class="menu-item-price">£8</span></div>
+          <p class="menu-item-desc">Cinnamon Spanish French toast, caramel sauce, vanilla ice cream <span class="chef-pick">★ Signature</span></p>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-header"><span class="menu-item-name">Chocolate Fondant</span><span class="menu-item-price">£9</span></div>
+          <p class="menu-item-desc">Warm Valrhona chocolate, cherry cream, sea salt</p>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-header"><span class="menu-item-name">Seasonal Sorbet</span><span class="menu-item-price">£6</span></div>
+          <p class="menu-item-desc">Three scoops — ask your server for today's flavours</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Drinks -->
+    <div style="margin-top:72px; text-align:center;">
+      <div class="gold-line" style="margin-bottom:28px;"></div>
+      <h3 style="font-family:'Playfair Display',serif;font-size:1.6rem;color:var(--dark);font-weight:500;margin-bottom:8px;">To Drink</h3>
+      <p style="color:var(--text-dim);margin-bottom:36px;font-size:0.95rem;">A Spanish-leaning list built around sherry, Atlantic whites, and the house sangria</p>
+    </div>
+    <div class="drinks-grid">
+      <div class="drink-card">
+        <div class="drink-icon">🍷</div>
+        <h4>House Sangria</h4>
+        <p>Crème de Mure, Triple Sec, red wine, orange &amp; peach — "Best in the city."</p>
+      </div>
+      <div class="drink-card">
+        <div class="drink-icon">🥃</div>
+        <h4>Sherry &amp; Vermut</h4>
+        <p>Manzanilla, Fino, Amontillado — plus house vermut served over ice with an olive.</p>
+      </div>
+      <div class="drink-card">
+        <div class="drink-icon">🍸</div>
+        <h4>Mezcalita &amp; Cocktails</h4>
+        <p>Smoky mezcal, fresh citrus, house bitters. Classic and original pours.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Press -->
+<section id="press">
+  <div class="container">
+    <div class="section-label">Recognition</div>
+    <h2 class="section-title">What the <em>critics</em> say</h2>
+    <div class="press-grid">
+      <div class="press-card">
+        <div class="press-outlet">Michelin Guide 2025</div>
+        <p class="press-quote">"A neighbourhood restaurant with a passionate team. Dishes such as suckling pig are prepared with skill — and the chefs personally deliver them to your table."</p>
+      </div>
+      <div class="press-card">
+        <div class="press-outlet">The Good Food Guide</div>
+        <p class="press-quote">"Ranked #67 in Britain's Top 100 Local Restaurants. Chef Iain Swainson has elevated Spanish dining in Brighton with modern takes on pintxos and tapas."</p>
+      </div>
+      <div class="press-card">
+        <div class="press-outlet">Tom Parker Bowles · Daily Mail</div>
+        <p class="press-quote">"An absolute Iberian gem. One hell of a dish — the sort of place where you demand the plate be licked clean."</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Gallery -->
+<section id="gallery">
+  <div class="container">
+    <div class="section-label">Inside Amari</div>
+    <h2 class="section-title">A <em>look</em> inside</h2>
+    <div class="gold-line left" style="margin-bottom:40px;"></div>
+
+    <div class="gallery-grid">
+      <div class="gallery-item">
+        <img src="images/interior-1.jpg" alt="Amari dining room" onerror="this.parentElement.style.background='linear-gradient(160deg, #2c1c14, #3d2a18)';this.style.display='none'">
+        <span class="gallery-label">The dining room</span>
+      </div>
+      <div class="gallery-item">
+        <img src="images/food-1.jpg" alt="Signature dish" onerror="this.parentElement.style.background='linear-gradient(160deg, #3d2a18, #2c1c14)';this.style.display='none'">
+        <span class="gallery-label">Croquetas de Setas</span>
+      </div>
+      <div class="gallery-item">
+        <img src="images/food-2.jpg" alt="Tasting plate" onerror="this.parentElement.style.background='linear-gradient(160deg, #2c1c14, #3d2a18)';this.style.display='none'">
+        <span class="gallery-label">Gambas al Ajillo</span>
+      </div>
+      <div class="gallery-item">
+        <img src="images/interior-2.jpg" alt="Open kitchen" onerror="this.parentElement.style.background='linear-gradient(160deg, #3d2a18, #2c1c14)';this.style.display='none'">
+        <span class="gallery-label">The kitchen</span>
+      </div>
+      <div class="gallery-item">
+        <img src="images/food-3.jpg" alt="Dessert" onerror="this.parentElement.style.background='linear-gradient(160deg, #2c1c14, #3d2a18)';this.style.display='none'">
+        <span class="gallery-label">Torrija</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Guest Reviews -->
+<section id="reviews">
+  <div class="container">
+    <div class="section-label">Our Guests</div>
+    <h2 class="section-title">The people who <em>fill</em> the seats</h2>
+    <div class="gold-line left" style="margin-bottom:36px;"></div>
+    <div class="reviews-grid">
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"The best sangria I've ever had. Every dish was exceptional — the prawns in garlic butter with that bisque, the mushroom croquetas, the braised beef rib. The chefs bring dishes to the table and explain them. It's intimate, warm, and utterly brilliant."</p>
+        <p class="review-author">— Sarah L., Brighton</p>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"A tiny, perfect place on Baker Street. We ordered half the menu and nothing missed. The torched mackerel was a standout, as was the cinnamon torrija for dessert. Feels like a secret you want to keep — but also tell everyone about."</p>
+        <p class="review-author">— James &amp; Emily, London</p>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Michelin-worthy cooking in a room that seats 20. The sherry list is deep, the staff know every dish intimately, and the pace — plates arriving when they're ready — feels exactly like Spain. Brighton's most exciting opening in years."</p>
+        <p class="review-author">— Mark R., Hove</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section id="contact">
+  <div class="container">
+    <h2 class="section-title">Find <em>us</em></h2>
+    <p style="color:rgba(255,255,255,0.45);margin-bottom:40px;font-size:1rem;max-width:480px;">We're a minute from the Open Market. Twenty seats. Book ahead — walk-ins are rare but we'll always try.</p>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <p><span class="contact-icon">📍</span> 15 Baker Street, Brighton, BN1 4JN</p>
+        <p><span class="contact-icon">📞</span> <a href="tel:+441273435992">01273 435 992</a></p>
+        <p><span class="contact-icon">📷</span> <a href="https://instagram.com/amaribrighton" target="_blank">@amaribrighton</a></p>
+        <a href="javascript:void(0)" class="btn btn-primary" data-reserve style="display:inline-block;margin-top:18px;">Book a Table</a>
+      </div>
+      <div>
+        <table class="hours-table">
+          <tr><td>Monday – Tuesday</td><td>Closed</td></tr>
+          <tr><td>Wednesday</td><td>18:00 – 21:30</td></tr>
+          <tr><td>Thursday – Friday</td><td>12:30 – 14:45 · 18:00 – 21:30</td></tr>
+          <tr><td>Saturday</td><td>12:30 – 14:30 · 18:00 – 21:30</td></tr>
+          <tr><td>Sunday</td><td>Closed</td></tr>
+        </table>
+        <div class="contact-note">
+          Reservations strongly recommended.<br>
+          Groups of 6+ please call directly.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2024 Amari Brighton. All rights reserved.</p>
+  <p>Michelin Guide 2025 · Good Food Guide Top 100 · 15 Baker Street, Brighton</p>
+</footer>
+
+<!-- ── Reservation Modal ── -->
+<div class="modal-overlay" id="reserveModal">
+  <div class="modal">
+    <button class="modal-close" id="modalClose" aria-label="Close">✕</button>
+    <div class="modal-header">
+      <h3>Book a Table</h3>
+      <div class="gold-line"></div>
+    </div>
+
+    <form class="modal-body" id="reserveForm" novalidate>
+      <div class="form-row">
+        <div class="form-group" id="nameGroup">
+          <label class="form-label" for="guestName">Contact Name <span class="required">*</span></label>
+          <input class="form-input" type="text" id="guestName" placeholder="Your full name" required>
+          <span class="form-error">Please enter your name</span>
+        </div>
+        <div class="form-group" id="guestsGroup">
+          <label class="form-label" for="guestCount">Party Size <span class="required">*</span></label>
+          <select class="form-select" id="guestCount" required>
+            <option value="" disabled selected>Guests</option>
+            <option value="1">1 guest</option>
+            <option value="2">2 guests</option>
+            <option value="3">3 guests</option>
+            <option value="4">4 guests</option>
+            <option value="5">5 guests</option>
+            <option value="6">6 guests</option>
+            <option value="6+">6+ (call us)</option>
+          </select>
+          <span class="form-error">Please select party size</span>
+        </div>
+      </div>
+
+      <div class="form-group" id="contactGroup">
+        <label class="form-label" for="guestContact">Contact <span class="required">*</span></label>
+        <input class="form-input" type="text" id="guestContact" placeholder="Phone number or email address" required>
+        <span class="form-error">Please enter a phone number or email</span>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group" id="dateGroup">
+          <label class="form-label" for="reserveDate">Date <span class="required">*</span></label>
+          <input class="form-input" type="date" id="reserveDate" required>
+          <span class="form-error">Please select a date</span>
+        </div>
+        <div class="form-group" id="timeGroup">
+          <label class="form-label" for="reserveTime">Time <span class="required">*</span></label>
+          <select class="form-select" id="reserveTime" required>
+            <option value="" disabled selected>Select time</option>
+            <optgroup label="Lunch (Thu – Sat)">
+              <option value="12:30">12:30 PM</option>
+              <option value="13:00">1:00 PM</option>
+              <option value="13:30">1:30 PM</option>
+            </optgroup>
+            <optgroup label="Dinner (Wed – Sat)">
+              <option value="18:00">6:00 PM</option>
+              <option value="18:30">6:30 PM</option>
+              <option value="19:00">7:00 PM</option>
+              <option value="19:30">7:30 PM</option>
+              <option value="20:00">8:00 PM</option>
+              <option value="20:30">8:30 PM</option>
+            </optgroup>
+          </select>
+          <span class="form-error">Please select a time</span>
+        </div>
+      </div>
+
+      <div class="form-group" id="dietGroup">
+        <label class="form-label" for="dietary">Dietary Requirements</label>
+        <textarea class="form-textarea" id="dietary" placeholder="Allergies, intolerances, or preferences we should know about…"></textarea>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-cancel" id="modalCancel">Cancel</button>
+        <button type="submit" class="btn btn-primary">Confirm Reservation</button>
+      </div>
+    </form>
+
+    <div class="modal-success" id="modalSuccess">
+      <div class="success-icon">~</div>
+      <h4>Request Received</h4>
+      <p>Thank you. We'll confirm your reservation within 24 hours. For same-day bookings, please call <strong style="color:var(--paprika);">01273 435 992</strong>.</p>
+      <button class="btn btn-primary" id="modalDone" style="margin-top:18px;">Done</button>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+  // ── Mobile nav ──
+  document.querySelectorAll('.nav-links a').forEach(function (link) {
+    link.addEventListener('click', function () {
+      document.querySelector('.nav-links').classList.remove('open');
+    });
+  });
+
+  // ── Reservation Modal ──
+  var modal = document.getElementById('reserveModal');
+  var form = document.getElementById('reserveForm');
+  var success = document.getElementById('modalSuccess');
+
+  if (!modal || !form || !success) return;
+
+  var dateInput = document.getElementById('reserveDate');
+  if (dateInput) {
+    dateInput.setAttribute('min', new Date().toISOString().split('T')[0]);
+  }
+
+  function openModal() {
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    var navLinks = document.querySelector('.nav-links');
+    if (navLinks) navLinks.classList.remove('open');
+    form.style.display = 'block';
+    success.classList.remove('show');
+    form.reset();
+    var groups = document.querySelectorAll('.form-group');
+    for (var i = 0; i < groups.length; i++) {
+      groups[i].classList.remove('error');
+    }
+  }
+
+  function closeModal() {
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  var reserveBtns = document.querySelectorAll('[data-reserve]');
+  for (var i = 0; i < reserveBtns.length; i++) {
+    reserveBtns[i].addEventListener('click', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      openModal();
+    });
+  }
+
+  document.getElementById('modalClose').addEventListener('click', closeModal);
+  document.getElementById('modalCancel').addEventListener('click', closeModal);
+  document.getElementById('modalDone').addEventListener('click', closeModal);
+
+  modal.addEventListener('click', function (e) {
+    if (e.target === modal) closeModal();
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
+  });
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    var groups = document.querySelectorAll('.form-group');
+    for (var i = 0; i < groups.length; i++) {
+      groups[i].classList.remove('error');
+    }
+
+    var valid = true;
+    var name = document.getElementById('guestName').value.trim();
+    var guests = document.getElementById('guestCount').value;
+    var contact = document.getElementById('guestContact').value.trim();
+    var date = document.getElementById('reserveDate').value;
+    var time = document.getElementById('reserveTime').value;
+
+    if (!name) { document.getElementById('nameGroup').classList.add('error'); valid = false; }
+    if (!guests) { document.getElementById('guestsGroup').classList.add('error'); valid = false; }
+    if (!contact) { document.getElementById('contactGroup').classList.add('error'); valid = false; }
+    if (!date) { document.getElementById('dateGroup').classList.add('error'); valid = false; }
+    if (!time) { document.getElementById('timeGroup').classList.add('error'); valid = false; }
+
+    if (!valid) return;
+
+    form.style.display = 'none';
+    success.classList.add('show');
+  });
+
+  // ── Scroll reveal ──
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        entry.target.style.animationPlayState = 'running';
+      }
+    });
+  }, { threshold: 0.15 });
+
+  var revealEls = document.querySelectorAll('section .container, .hero-content, .press-card, .review-card, .gallery-item');
+  for (var i = 0; i < revealEls.length; i++) {
+    revealEls[i].classList.add('reveal');
+    revealEls[i].style.animationPlayState = 'paused';
+    observer.observe(revealEls[i]);
+  }
+
+});
+</script>
+</body>
+</html>
